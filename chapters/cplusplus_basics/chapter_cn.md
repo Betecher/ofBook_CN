@@ -321,21 +321,16 @@ int main(){
 
 ## 复杂性的封装
 
-Imagine actor Laurence Fishburne wearing tinted pince-nez glasses, offering you two options that are pretty complicated to explain. On the one hand, he is willing to help you escape from the evil Matrix so that you may fulfill your destiny as the hacker hero, but it involves living life on life's terms and that is potentially painful but whatever. The story must go on and by the way, there is a pretty girl. On the other hand, he is also willing to let you forget this all happened, and mysteriously plant you back in your tiny apartment where you can go on living a lie, none the wiser. These two options are explained in the movie *The Matrix* and then the main character is offered the choice in the form of colored pills, as a way to simplify an otherwise wordy film scenario. The two complex choices are encapsulated into a simple analogy that is much easier for movie audiences to swallow. See Figure 12.
-
-想象一下演员Laurence Fishburne穿着有色眼镜, 为你提供两个相当复杂的选项来解释。 一方面, 他愿意帮助你逃离邪恶的矩阵, 以便你可以完成你的命运作为黑客英雄, 但它涉及生活的生活的生活条件, 这是潜在的痛苦, 但无论如何。 故事必须继续, 顺便说一句, 有一个漂亮的女孩。 另一方面, 他也愿意让你忘记这一切发生, 神秘地把你种在你的小公寓里, 你可以去生活谎言, 没有一个更聪明。 这两个选项在电影*矩阵*中解释, 然后主要字符提供彩色药片的形式的选择, 作为一种方式来简化否则冗长的电影场景。 两个复杂的选择被封装成一个简单的类比, 这对电影观众来说更容易吞下。 参见图12。
+想象一下演员 Laurence Fishburne 穿着有色眼镜, 为你提供两个相当复杂的选项来解释。 一方面, 他愿意帮助你逃离邪恶的矩阵, 以便你可以完成你作为黑客英雄的命运, 但它涉及生活的生存条件, 这是潜在的痛苦, 但无论如何。 故事必须继续, 顺便说一句, 有一个漂亮的女孩。 另一方面, 他也愿意让你忘记这一切发生, 神秘地把你种在你的小公寓里, 你可以生活在谎言里, 不需要智慧。 这两个选项在电影 *黑客帝国* 中解释, 然后主要字符提供彩色药片的形式的选择, 作为一种方式来简化否则冗长的电影场景。 两个复杂的选择被封装成一个简单的类比, 这对电影观众来说更容易吞下。 参见图12。
 
 ![Figure 12. Red Pill and Blue Pill from The Matrix](images/red-blue-pills.png "Figure 12. Red Pill and Blue Pill from The Matrix")
 
-Rather than repeating back the entire complicated situation, Neo (the main character) needed only to swallow one of the pills. Even if it were real medicine, the idea of encapsulating complexity still applies. Most of us do not have the expertise to practice medicine in the most effective way, and so we trust physicians and pharmacologists to create just the right blend of just the right herbs and chemicals. When you swallow a pill, it is like calling that function because you have the advantage of not needing to understand the depths of the pill. You simply trust that the pill will cause an outcome. The same is true with code. Most of the time, a function was written by someone else, and if that person is a good developer, you are free to remain blissfully ignorant of their function's inner workings as long as you grasp how to properly call their function. In this way, you are the *higher-level* coder, meaning that you simply call the function but you did not write it. Someone who creates a project in openFrameworks is sitting on the shoulders of the openFrameworks layer. openFrameworks sits on the shoulders of the OpenGL Utility Toolkit, which sits on OpenGL itself, and so on. In other words, an openFrameworks project is a *higher-level* application of C++, a language with a reputation for *lower-level* programming. As illustrated in Figure 13, I sometimes run into a problem when I tell people I wrote an interactive piece in C++.
 
-不是重复整个复杂的情况, Neo(主角)只需要吞下一个药丸。即使它是真正的医学, 封装复杂性的想法仍然适用。我们大多数人没有以最有效的方式实践医学的专业知识, 因此我们相信医生和药理学家创造恰到好处的恰当的草药和化学品的混合。当你吞下药丸, 它就像调用这个函数, 因为你有优势, 不需要了解药丸的深度。你只是相信丸会导致结果。代码也是如此。大多数时候, 一个函数是由别人写的, 如果那个人是一个好的开发者, 只要你掌握如何正确调用函数, 你就可以自由地保持对函数的内部工作的无知。这样, 你是*高级*编码器, 意味着你只需调用函数, 但你没有写它。在openFrameworks中创建项目的人正坐在openFrameworks层的肩膀上。 openFrameworks坐在OpenGL实用工具包的肩膀上, 它位于OpenGL本身, 等等。换句话说, openFrameworks项目是C ++的一个更高级别的*应用程序, 一种具有低级*编程声誉的语言。如图13所示, 当我告诉人们我用C ++编写了一个交互式文章时, 我有时会遇到一个问题。
+不是重复整个复杂的情况, Neo(主角)只需要吞下一个药丸。即使它是真正的医学, 封装复杂性的想法仍然适用。我们大多数人没有以最有效的方式实践医学的专业知识, 因此我们相信医生和药理学家创造恰到好处的恰当的草药和化学品的混合。当你吞下药丸, 它就像调用这个函数, 因为你有优势, 不需要了解药丸的专业深度。你只是相信丸会导致结果。代码也是如此。大多数时候, 一个函数是由别人写的, 如果那个人是一个好的开发者, 只要你掌握如何正确调用函数, 你就可以自由地保持对函数的内部工作的无知。这样, 你就是 *高层级* 的程序员, 意味着你只需调用函数, 但你没有写它。在 openFrameworks 中创建项目的人基于 openFrameworks 的基础上。 openFrameworks 基于 OpenGL 实用工具包的基础之上, 它基于 OpenGL 本身, 等等。换句话说, openFrameworks 项目是 C++ 的一个更高级别的 *应用程序*。一种具有*低层级*编程声誉的语言。如图13所示, 当我告诉人们我用 C++ 编写了一个交互式文章时, 我有时会遇到这样一个问题。
 
 ![Figure 13. Standing on Shoulders of Giants](images/shoulders-of-giants.png "Figure 13. Standing on Shoulders of Giants")
 
-There are a few advantages to using C++ over the other options (mostly scripting) for your new media project. The discussion can get quite religious (read: heated) among those who know the details. If you seek to learn C++, then usually it is because you seek faster runtime performance, because C++ has more libraries that you can snap into your project, or because your mentor is working in that language. An oF project is considered higher-level because it is working with a greater encapsulation of complexity, and that is something to be proud of.
-
-使用C ++比其他选项(主要是脚本)为您的新媒体项目有一些优势。 在那些知道细节的人中, 讨论可以相当宗教(阅读：热)。 如果你试图学习C ++, 通常是因为你寻求更快的运行时性能, 因为C ++有更多的库, 你可以捕捉到你的项目, 或者因为你的导师工作在那种语言。 oF项目被认为是更高级别的, 因为它正在以更大的复杂性封装工作, 这是值得自豪的。
+使用 C++ 比其他选项 (主要是脚本) 为您的新媒体项目提供一些优势。 在那些知道细节的人中, 讨论可以相当宗教 (读作：狂热)。 如果你试图学习 C++, 通常是因为你寻求更快的运行时性能, 因为 C++ 有更多的库, 你可以捕捉到你的项目, 或者因为你的导师在使用这种语言。 OF 项目被认为是更高级别的, 因为它做的是更大的复杂性封装工作, 这也是值得自豪的一点。
 
 
 ## 变量 (第一部分)
@@ -360,8 +355,6 @@ int main(){
 }
 ```
 
-The output looks like this:
-
 输出看起来应该是这样:
 
 ```
@@ -370,14 +363,9 @@ The answer to the life the universe and everything is 42.
 That number plus 1 is 43.
 ```
 
-We understand from a previous lesson that stuff you put between the `<<` operators will get formatted into the `cout` object, and magically end up in the output console. Notice in the last line, I put a bit of light arithmetic (42+1) between parentheses, and it evaluated to 43. That is called an *expression*, in the mathematics sense. These three lines of code all say something about the number 42, and so they all contain a *literal* integer. A literal value is the contents typed directly into the code; some would say "hard wired" because the value is fixed once it is compiled in with the rest.
+从上一课我们可以理解, 在 `<<` 运算符之间放置的东西将被格式化为 `cout` 对象, 并且神奇地出现在输出控制台中。 注意在最后一行, 我把一点点算术 (42 + 1) 在括号之间, 它计算成43。在数学意义上, 这被称为 *表达式*。 这三行代码都是关于数字42的, 所以它们都包含一个 *字面* 整数。 字面值是直接键入代码的内容, 也被称为“硬接线”, 因为一旦它编译完成, 其值是固定的。
 
-从上一课我们可以理解, 在`<<`运算符之间放置的东西将被格式化为`cout`对象, 并且神奇地出现在输出控制台中。 注意在最后一行, 我把一点点算术(42 + 1)在括号之间, 它评估到43.在数学意义上, 这被称为*表达式*。 这三行代码都是关于数字42的, 所以它们都包含一个*字面*整数。 字面值是直接键入代码的内容; 有些人会说“硬接线”, 因为一旦它编译在其余的值是固定的。
-
-
-If I want to change that number, I can do what I know from word processing, and "find-and-replace" the 42 to a new value. Now what if I had 100,000 particles in a 3D world. Some have 42s that need changing, but other 42s that should not be changed? Things can get both heavy and complex when you write code. The most obvious application of *variables* is that they are a very powerful find-and-replace mechanism, but you'll see that variables are useful for more than that. So let's declare an integer at the top of the code and use it in place of the literal 42s.
-
-如果我想改变那个数字, 我可以做我知道从文字处理, 和“查找和替换”42一个新的值。 现在如果我在3D世界中有100,000颗粒子。 一些有42s需要改变, 但其他42s不应该改变？ 当你编写代码时, 事情会变得沉重和复杂。 *变量*最明显的应用是它们是一个非常强大的查找和替换机制, 但是你会看到变量对此有用。 所以让我们在代码的顶部声明一个整数, 并使用它代替文字42。
+如果我想改变那个数字, 我可以做我知道从文字处理, “查找和替换”给 42 一个新的值。 但现在如果我在3D世界中有100,000颗粒子。 又一些42s需要改变, 但其他42s不应该改变？ 当你编写代码时, 事情会变得沉重和复杂。 *变量* 最明显的应用是它们是一个非常强大的查找和替换机制, 但是你会看到变量不仅仅在这方面有用。 所以让我们在代码的顶部声明一个整数, 并使用它代替文字42。
 
 ```cpp
 #include <iostream>
@@ -394,13 +382,9 @@ int main(){
 }
 ```
 
-Now that I am using the variable `answer`, I only need to change that one number in my code, and it will show up in all three sentences as 42. That can be more elegant than find-and-replace. Figure 18 shows the syntax explanation for declaring and initializing a variable on the same line.
-
-现在我使用的变量`answer`, 我只需要改变一个数字在我的代码, 它将显示在所有三个句子为42。这可能比寻找和替换更优雅。 图18显示了在同一行上声明和初始化变量的语法解释。
+现在我使用的变量 `answer`, 我只需要改变一个数字在我的代码, 它将显示在所有三个句子为42。这可能比寻找和替换更优雅。 图18显示了在同一行上声明和初始化变量的语法解释。
 
 ![Figure 18. Variable declaration and initialization](images/variable-declaration.png "Figure 18. Variable declaration and initialization")
-
-It is also possible to declare a variable and initialize it on two separate lines. That would look like:
 
 也可以声明一个变量并在两个单独的行上初始化它。 它看起来像：
 
@@ -409,11 +393,9 @@ int answer;
 answer = 42;
 ```
 
-In this case, there is a moment after you declare that variable when its answer may be unpredictable and glitchy because in C (unlike Java), fresh variables are not set to zero for free — you need to do it. If you don't, the variable can come up with unpredictable values — computer memory-garbage from the past. So, unless you intend to make glitch art, please always initialize your variable to some number upon declaring it, even if that number is zero.
+在这种情况下, 在您声明该变量后, 有一个时刻, 当它的答案可能是不可预测的和故障, 因为在 C (不像 Java), 新的变量没有自动设置为零 - 你需要这样做。 如果你不这样做, 变量可以得出不可预测的值 - 计算机内存 - 就是从过去的垃圾。 所以, 除非你打算制作故障艺术, 否则在声明它时, 请始终初始化一些数字, 即使这个数字是零。
 
-在这种情况下, 在您声明该变量后, 有一个时刻, 当它的答案可能是不可预测的和毛刺, 因为在C(不像Java), 新鲜变量没有设置为零免费 - 你需要这样做。 如果你不这样做, 变量可以得出不可预测的值 - 计算机内存 - 从过去的垃圾。 所以, 除非你打算制作毛刺艺术, 在声明它时, 请始终初始化一些数字, 即使这个数字是零。
 
-### Naming your variable
 ### 给你的变量命名
 
 Notice the arrow below saying "must be a valid name". We invent new names to give our namespaces, functions, variables, and other constructs we define in code (classes, structs, enums, and other things I haven't taught you). The rules for defining a new identifier in code are strict in a similar way that choosing a password on a website might be.
@@ -704,4 +686,3 @@ Stopping the chapter here is by no means intended to separate what is important 
 > 预测未来的最佳方式就是去创造它。
 > 
 > **--Abraham Lincoln**
-
