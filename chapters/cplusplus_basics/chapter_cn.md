@@ -201,17 +201,13 @@ prog.cpp:5:27: error: 'endl' was not declared in this scope
 using namespace std;
 ```
 
-Let's say you join a social website and it asks you to choose a username. My name is Joshua Nimoy — username might be JNIMOY. I submit the page and it returns an error, telling me that username is already taken, and I have to choose another, since my father, Joseph Nimoy, registered before I did and he's got JNIMOY. And so I must use my middle initial T, and create a unique username, JTNIMOY. I just created and resolved a *namespace conflict*. A namespace is a group of unique names — none are identical. It's possible to have identical names, as long as they are a part of two separate namespaces. Namespaces help programmers avoid stepping on each other's toes by overwriting one another's symbols or hogging the good names. Namespaces also provide a neat and tidy organization system to help us find what we're looking for. In openFrameworks, everything starts with `of` . . . like `ofSetBackground` and `ofGraphics`. This is one technique to do namespace separation because it's less likely that any other names created by other programmers would begin with `of`. The same technique is used by OpenGL. Every name in the OpenGL API (Application Programming Interface) begins with `gl` like `glBlendFunc` and `glPopMatrix`. In C++ however, it is not necessary to have a strictly disciplined character prefix for your names, as the language provides its own namespacing syntax. In line 2, `using namespace std;` is telling the compiler that this .cpp file is going to use all the names in the `std` namespace. Spoiler-alert! those two names are `cout` and `endl`. Let us now do an experiment and comment out line 2, then run the code. What sort of error do you think the compiler will return?
-
-假设您加入了一个社交网站, 并要求您选择用户名。我的名字是Joshua Nimoy - 用户名可能是JNIMOY。我提交页面, 它返回一个错误, 告诉我用户名已经采取, 我必须选择另一个, 因为我的父亲约瑟夫Nimoy, 在我之前注册, 他有JNIMOY。所以我必须使用我的中间初始T, 并创建一个唯一的用户名, JTNIMOY。我刚刚创建并解决了一个*命名空间冲突*。命名空间是一组唯一的名称 - 没有一个相同。它可以有相同的名称, 只要它们是两个单独的命名空间的一部分。命名空间帮助程序员避免通过覆盖彼此的符号或篡改好的名字来踩在彼此的脚趾上。命名空间还提供一个整洁和整洁的组织系统, 以帮助我们找到我们要找的。在openFrameworks中, 一切都以`of`开头。 。 。像`ofSetBackground`和`ofGraphics。这是一种执行命名空间分离的技术, 因为其他程序员创建的任何其他名称都不太可能以“of”开头。 OpenGL使用相同的技术。 OpenGL API（应用程序编程接口）中的每个名称都以`gl`开头, 例如`glBlendFunc`和`glPopMatrix`。然而, 在C ++中, 没有必要为您的名称提供严格规范的字符前缀, 因为语言提供了自己的命名空间语法。在第2行中, `using namespace std;`告诉编译器这个.cpp文件将使用`std`命名空间中的所有名称。扰流警报！这两个名称是`cout`和`endl`。让我们现在做一个实验, 注释掉第2行, 然后运行代码。你认为编译器会返回什么样的错误？
+假设您加入了一个社交网站, 并要求您选择用户名。我的名字是Joshua Nimoy - 用户名可能是JNIMOY。我提交页面, 它返回一个错误, 告诉我用户名已经采取, 我必须选择另一个, 因为我的父亲 Joseph Nimoy, 他比我先注册了JNIMOY。所以我必须使用我的中间初始T, 并创建一个唯一的用户名, JTNIMOY。我刚刚创建并解决了一个 *命名空间冲突* *namespace conflict*。命名空间是一组唯一的名称, 即没有一个相同。它可以有相同的名称, 只要它们是两个单独的命名空间的一部分。命名空间帮助程序员避免因为覆盖彼此的符号或篡改彼此的名字而妨碍合作。命名空间还提供一个整洁和整洁的组织系统, 以帮助我们找到我们要找的。在openFrameworks中, 一切都以 `of` 开头。 。 。像 `ofSetBackground` 和 `ofGraphics`。这是一种执行命名空间分离的技术, 因为其他程序员创建的任何其他名称都不太可能以 `of` 开头。 OpenGL使用相同的技术。 OpenGL API（应用程序编程接口）中的每个名称都以`gl`开头, 例如 `glBlendFunc` 和 `glPopMatrix`。然而, 在 C++ 中, 没有必要为您的名称提供严格规范的字符前缀, 因为语言提供了自己的命名空间语法。在第2行中, `using namespace std;` 告诉编译器这个 .cpp 文件将使用 `std` 命名空间中的所有名称。扰流警报！这两个名称是 `cout` 和 `endl`。让我们现在做一个实验, 注释掉第2行, 然后运行代码。你认为编译器会返回什么样的错误？
 
 ```cpp
 /* using namespace std; */
 ```
 
-It's a very similar error as before, where it cannot find `cout` or `endl`, but this time, there are suggested alternatives added to the message list.
-
-这是一个非常类似的错误, 以前, 它找不到`cout`和`endl`, 但这一次, 有建议替代添加到消息列表。
+这是一个非常类似的错误, 以前, 它找不到 `cout` 和 `endl`, 但这一次, 有建议替代添加到消息列表。
 
 ```
 prog.cpp:5:2: note: suggested alternative:
@@ -221,9 +217,7 @@ In file included from prog.cpp:1:0:
                   ^
 ```
 
-The compiler says, "Hey, I searched for `cout` and I did find it in one of the namespaces included in the file. Here it is. `std::cout`" and in this case, the compiler is correct. It wants us to be *more explicit* with the way we type `cout`, so we express its namespace `std` (standard) on the left side, connected by a double colon (::). it's sort of like calling myself `Nimoy::Joshua`. Continuing our experiment, edit line 5 so that `cout` and `endl` have explicit namespaces added.
-
-编译器说：“嘿, 我搜索`cout`, 我在文件中包含的命名空间中找到它, 这里是``std :: cout`”, 在这种情况下, 编译器是正确的。 它希望我们使用`cout`的方式*更明确*, 所以我们在左侧表示它的命名空间`std`（标准）, 用双冒号（：:)连接。 它就像自称为“Nimoy :: Joshua”。 继续我们的实验, 编辑第5行, 使得`cout'和'endl`添加了显式命名空间。
+编译器说：“嘿, 我搜索了 `cout`, 我在文件中包含的命名空间中找到它, 这里是 `std :: cout` ”, 在这种情况下, 编译器是正确的。 它希望我们使用 `cout` 的方式 *更明确*, 所以我们在左侧表示它的命名空间 `std`（标准）, 用双冒号 (::) 连接。 它就像自称为 “Nimoy::Joshua”。 继续我们的实验, 编辑第5行, 为 `cout` 和 `endl` 添加了显式命名空间。
 
 ```cpp
 std::cout << "Hello World" << std::endl;
