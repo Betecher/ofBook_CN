@@ -398,18 +398,12 @@ answer = 42;
 
 ### 给你的变量命名
 
-Notice the arrow below saying "must be a valid name". We invent new names to give our namespaces, functions, variables, and other constructs we define in code (classes, structs, enums, and other things I haven't taught you). The rules for defining a new identifier in code are strict in a similar way that choosing a password on a website might be.
 
-注意下面的箭头说“必须是有效的名称”。 我们发明了新的名字来给我们在代码中定义的命名空间, 函数, 变量和其他结构(类, 结构, 枚举和其他我没有教过的东西)。 在代码中定义新标识符的规则与在网站上选择密码类似的方式是严格的。
+注意下面的箭头说 “必须是有效的名称”。 我们发明了新的名字来给我们在代码中定义的命名空间, 函数, 变量和其他结构 (类, 结构, 枚举和其他我没有教过的东西)。 在代码中定义新标识符的规则与在网站上选择密码类似的方式是严格的。
 
-+ Your identifier must contain only letters, numbers, and underscores.
 + 您的标识符只能包含字母, 数字和下划线。
-+ it cannot begin with a number, but it can certainly begin with an underscore.
-+ 它不能以数字开头, 但它可以肯定以下划线开头。
-+ The name cannot be the same as one of the language keywords (for example, the word `void`)
-+ 该名称不能与其中一个语言关键字相同(例如, 单词“void”)
-
-The following identifiers are okay.
++ 它不能以数字开头, 但它肯定可以以下划线开头。
++ 该名称不能与语言关键字相同(例如, 单词“void”)
 
 以下标识符是合格的。
 
@@ -423,10 +417,8 @@ _         // a single underscore is fine
 ___       // several underscores are fine
 ```
 
-Notice lowercase a is a different identifier than uppercase A. Identifiers in C++ are case-sensitive.
-The following identifiers are not okay.
 
-注意小写字母a是与大写字母A不同的标识符。C ++中的标识符区分大小写。
+注意小写字母 a 是与大写字母 A 不同的标识符。C++ 中的标识符区分大小写。
 以下标识符不正确。
 
 ```cpp
@@ -438,9 +430,7 @@ void                  // should not be a reserved word
 int                   // should not be a reserved word
 ```
 
-naming your variable `void_int`, although confusing, would not cause any compiler errors because the underscore joins the two keywords into a new identifier. Occasionally, you will find yourself running into `unqualified id` errors. Here is a list of C++ reserved keywords to avoid when naming variables. C++ needs them so that it can provide a complete programming language.
-
-命名你的变量`void_int`, 虽然令人困惑, 不会导致任何编译器错误, 因为下划线将两个关键字连接到一个新的标识符。 偶尔, 你会发现自己遇到了“不合格的id”错误。 这里是一个C ++保留关键字的列表, 以避免在命名变量时。 C ++需要它们, 以便它可以提供一个完整的编程语言。
+命名你的变量 `void_int`, 虽然令人困惑, 但不会导致任何编译器错误, 因为下划线将两个关键字连接到一个新的标识符。 偶尔, 你会发现自己遇到了 `unqualified id` 错误。 这里是一个 C++ 保留关键字的列表, 以避免在命名变量时。 C++ 需要它们, 以便它可以提供一个完整的编程语言。
 
 ```
 alignas alignof and and_eq asm auto bitand bitor bool break case catch
@@ -454,34 +444,25 @@ template this thread_local throw true try typedef typeid typename
 union unsigned using virtual void volatile wchar_t while xor xor_eq
 ```
 
-### Naming conventions
+
 ### 命名组件
 
-> Differences of habit and language are nothing at all if our aims are identical and our hearts are open.
 >
-> **--Albus Dumbledore**
 > 语言和习惯的不同是微不足道的, 如果我们的目标是想通的, 并保持开放的心态。
 > 
 > **--Albus Dumbledore**
 
-Identifiers (variables included) are written with different styles to indicate their various properties, such as type of construct (variable, function, or class?), data type (integer or string?), scope (global or local?), level of privacy, etc. You may see some identifiers capitalized at the beginning and using `CamelCase`, while others remain all `lower_case_using_underscores_to_separate_the_words`. Global constants are found to be named with `ALL_CAPS_AND_UNDERSCORES`. Another way of doing lower-case naming is to start with a lowercase `letterThenCamelCaseFromThere`. You may also see a hybrid, like `ClassName__functionName__variable_name`. These different styles can indicate different categories of identifiers.
+标识符 (包括的变量) 用不同的样式写成, 以指示它们的各种属性, 例如结构类型 (变量, 函数或类？), 数据类型 (整数或字符串？), 范围 隐私等。你可能会看到一些标识符在开头大写, 并使用 `CamelCase`, 而其他仍然是`lower_case_using_underscores_to_separate_the_words`。 发现全局常量使用 `ALL_CAPS_AND_UNDERSCORES` 命名。 另一种做小写命名的方法是从小写字母 `letterThenCamelCaseFromThere` 开始。 你也可能看到一个混合版本, 如 `ClassName__functionName__variable_name`。 这些不同的样式可以指示不同类别的标识符。
 
-标识符(包括的变量)用不同的样式写成, 以指示它们的各种属性, 例如结构类型(变量, 函数或类？), 数据类型(整数或字符串？), 范围 隐私等。你可能会看到一些标识符在开头大写, 并使用`CamelCase`, 而其他仍然是`lower_case_using_underscores_to_separate_the_words`。 发现全局常量使用`ALL_CAPS_AND_UNDERSCORES`命名。 另一种做小写命名的方法是从小写字母“letterThenCamelCaseFromThere”开始。 你也可以看到一个混合, 如`ClassName__functionName__variable_name`。 这些不同的样式可以指示不同类别的标识符。
+更强调的是, 程序员有时可能会使用亲切的昵称 *匈牙利语符号*, 向标识符添加字符来说明事情, 但也会降低可读性, 例如 `dwLightYears`和 `szLastName`。 命名约定不是一成不变的, 当然不是由编译器强制执行的。 合作者通常需要就这些微妙的命名约定达成一致, 以使它们不会相互混淆, 并且要求每个人都遵守规则, 以便与惯例保持一致。 代码中的命名约定的主题仍然是开发者之间的热烈争论, 就像决定使用大括号的那一行, 以及是否使用制表符缩进。 像编程中的很多东西, 有人总是会告诉你你做错了。 但这并不一定意味着你做错了。
 
-More obsessively, programmers may sometimes use what is affectionately nicknamed *Hungarian Notation*, adding character badges to an identifier to say things about it but also reduce the legibility, for example `dwLightYears` and `szLastName`. Naming conventions are not set in stone, and certainly not enforced by the compiler. Collaborators generally need to agree on these subtle naming conventions so that they don't confuse one another, and it takes discipline on everyone's part to remain consistent with whatever convention was decided. The subject of naming convention in code is still a comically heated debate among developers, just like deciding which line to put the curly brace, and whether to use tabs to indent. Like a lot of things in programming, someone will always tell you you're doing it wrong. That doesn't necessarily mean you are doing it wrong.
 
-更强调的是, 程序员有时可能会使用亲切的昵称*匈牙利语符号*, 向标识符添加字符徽章来说明事情, 但也会降低可读性, 例如“dwLightYears”和“szLastName”。 命名约定不是一成不变的, 当然不是由编译器强制执行的。 合作者通常需要就这些微妙的命名约定达成一致, 以使它们不会相互混淆, 并且要求每个人都遵守规则, 以便与任何决定的惯例保持一致。 代码中的命名约定的主题仍然是开发者之间的热烈争论, 就像决定使用大括号的那一行, 以及是否使用制表符缩进。 像编程中的很多东西, 有人总是会告诉你你做错了。 这并不一定意味着你做错了。
-
-### Variables change
 ### 改变变量
 
-We call them variables because their values *vary* during runtime. They are most useful as a bucket where we put something (let's say water) for safe keeping. As that usually goes, we end up going back to the bucket and using some of the water, or mixing a chemical into the water, or topping up the bucket with more water, etc. A variable is like an empty bucket where you can put your stuff. Figure 19 shows a bucket from the game *Minecraft*.
 
-我们称之为变量, 因为它们的值*在运行时间变化*。 他们最有用的一个桶, 我们把东西(我们说水)安全保存。 正如通常那样, 我们最后回到桶, 使用一些水, 或者将化学品混入水中, 或者用更多的水补足桶等。变量就像一个空桶, 你可以放置 你的东西。 图19显示了游戏* Minecraft *中的一个桶。
+我们称之为变量, 因为它们的值在运行时可以*变化*。 他们是最有用的容器, 我们把东西 (比如水) 安全保存。 正如通常那样, 我们最后回到桶, 使用一些水, 或者将化学品混入水中, 或者用更多的水补充到桶里等。变量就像一个空桶, 你可以放置你的东西。 图19显示了游戏 *Minecraft* 中的一个桶。
 
 ![Figure 19. Bucket, courtesy of Mojang AB](images/minecraft-bucket.png "Figure 19. Bucket, courtesy of Mojang AB")
-
-If a computer program is like a little brain, then a variable is like a basic unit of remembrance. Jotting down a small note in my sketchbook is like storing a value into a variable for later use. Let's see an example of a variable changing its value.
 
 如果一个计算机程序像一个小脑子, 那么一个变量就像一个基本的记忆单元。 在我的写生簿中记下一个小笔记就像将一个值存储到一个变量中以供以后使用。 让我们看一个变量改变它的值的例子。
 
@@ -506,17 +487,13 @@ int main(){
 }
 ```
 
-The output should be `012345`. Notice the use of the equal sign. It is different than what we are accustomed to from arithmetic. In the traditional context, a single equal sign means the expressions on both sides would evaluate to the same value. In C, that is actually a double equal (==) and we will talk about it later. A single equal sign means "Solve the expression on the right side and store the answer into the variable named on the left side". It takes some getting used to if you haven't programmed before. If I were a beginning coder (as my inner child is perpetually), I would perhaps enjoy some alternative syntax to command the computer to store a value into a variable. Something along the lines of: `3 => counter` as found in the language *ChucK* by Princeton sound lab, or perhaps something a bit more visual, as my repurposing of the Minecraft crafting table in figure 20.
+输出的值应为 `012345`。 注意使用等号。 它不同于我们习惯的算术。 在传统上下文中, 单个等号意味着两侧的表达式将被评估为相同的值。 
 
-输出应为`012345`。 注意使用等号。 它不同于我们习惯的算术。 在传统上下文中, 单个等号意味着两侧的表达式将被评估为相同的值。 在C中, 这实际上是一个双等号(==), 我们将在以后讨论。 单个等号表示“解答右侧的表达式并将答案存储到左侧命名的变量中”。 如果你以前没有编程, 需要一些习惯。 如果我是一个开始的编码器(因为我的内在的孩子永远), 我可能会喜欢一些替代语法命令计算机存储一个值到一个变量。 在普林斯顿声音实验室的语言* ChucK *中发现的某些东西：`3 =>计数器, 或者可能是一些更加直观的东西, 就像我在图20中的Minecraft工艺表一样。
+在 C 语言中, 这实际上是一个双等号(==), 我们将在以后讨论。 单个等号表示“解答右侧的表达式并将答案存储到左侧命名的变量中”。 如果你以前没有编程, 需要慢慢习惯。 如果我是一个初学的程序员(假装我内心永远像个孩子), 我可能会喜欢一些替代语法命令计算机存储一个值到一个变量。 在普林斯顿声音实验室开发的语言 *ChucK* 中发现的某些东西: `3 => counter`, 或者可能是一些更加直观的东西, 就像我在图20中的 Minecraft 工艺表一样。
 
 ![Figure 20. Minecraft crafting table repurposed for variable assignment](images/minechuck.png "Figure 20. Minecraft crafting table repurposed for variable assignment")
 
-The usefulness of having the variable name on the left side rather than the right becomes apparent in practice since the expressions can get quite lengthy! Beginning a line with `varname =` ends up being easier for the eyeball to scan because it's guaranteed to be two symbols long before starting in on whatever madness you plan on typing after the equals sign.
-
-在左侧而不是右侧具有变量名的有用性在实践中变得明显, 因为表达式可能变得相当冗长！ 用`varname =`开始一行会更容易让眼球扫描, 因为它保证有两个符号长, 然后才开始计划在等号后输入的任何疯狂。
-
-Analyzing the previous code example, we see the number increments by 1 each time before it is output. I am repeatedly storing literal integers into the variable. Since a programming language knows basic arithmetic, let us now try the following modification:
+变量名的可用性体现在左侧而不是右侧的属性在实践中变得明显, 因为表达式可能会相当冗长！ 用 `varname =` 开始一行会更容易让眼球扫描, 因为它保证有两个符号长, 然后才开始计划在等号后输入的任何疯狂的值。
 
 分析前面的代码示例, 我们看到数字在输出之前每次增加1。 我反复存储文本整数到变量。 由于编程语言知道基本算术, 现在让我们尝试以下修改：
 
@@ -541,21 +518,15 @@ int main(){
 }
 ```
 
-The output should still be `012345`. By saying `counter = counter + 1`, I am incrementing `counter` by 1. More specifically, I am using `counter` in the right-hand "addition" expression, and the result of that (one moment later) gets stored into `counter`. This seems a bit funny because it talks about `counter` during two different times. It reminds me of the movie series, *Back to the Future*, in which Marty McFly runs into past and future versions of himself. See Figure 21.
-
-输出仍应为`012345`。 通过说“counter = counter + 1”, 我将计数器增加1.更具体地说, 我在右边的“加法”表达式中使用“counter”, 并且结果(一会儿之后)被存储 进入`counter'。 这似乎有点有趣, 因为它在两个不同的时间谈论“计数器”。 它让我想起了电影系列, “回到未来*”, 其中马蒂·麦克弗利遇到过去和未来的版本的自己。 参见图21。
+输出仍应为 `012345`。 通过写出 `counter = counter + 1`, 我将 `counter` 增加 1 更具体地说, 我在右边的“加法”表达式中使用 `counter`, 并且结果(一会儿之后)被存储进了 `counter`。 这似乎有点意思了, 因为它在两个不同的时间谈论 `counter`。 它让我想起了电影系列, *回到未来*, 其中 Marty McFly 遇到过去和未来的版本的自己。 参见图21。
 
 ![Figure 21. The future Marty uses the past Marty](images/futuremarty.png "Figure 21. The future Marty uses the past Marty")
 
-Great Scott, that could make someone dizzy! But after doing it a few times, you'll see it doesn't get much more complicated than what you see there. This is a highly *practical* use of science fiction, and you probably aren't attempting to challenge the fabric of spacetime (unless you are Kyle McDonald, or maybe a Haskell coder<!-- i mean these things as a high compliment, not as mockery -->). The point here is to modify the contents of computer memory, so we have `counter` from one instruction ago, in the same way that there might already be water in our bucket when we go to add water to it. Figure 22 shows `bucket = bucket + water`.
-
-伟大的斯科特, 这可能让某人晕了！ 但是做了几次后, 你会发现它不会比你看到的复杂得多。 这是一个高度*实用的科幻小说的使用, 你可能不是试图挑战时空的结构(除非你是凯尔麦克唐纳, 或者也许是一个Haskell编码器<！ - 我的意思是这些东西作为高恭维,  不是嘲弄 - >)。 这里的要点是修改计算机内存的内容, 所以我们有一个指令前面的`counter', 就像我们去加水一样。 图22显示了“bucket = bucket + water”。
+伟大的 Scott, 这可能让某些人懵了！ 但是做了几次后, 你会发现它不会比你看到的复杂很多。 这是一个高度*实用*的科幻小说的做法, 你可能不是试图挑战时空的结构(除非你是 Kyle McDonald, 或者也许是一个 Haskell 程序员 <!-- 我的意思是这是高级别的, 不是嘲弄 -->)。 这里的要点是修改计算机内存的内容, 所以我们有一个指令前面的 `counter`, 就像我们去加水一样。 图22显示了 `bucket = bucket + water`。
 
 ![Figure 22. bucket = bucket + water](images/minecraft-inc.png "Figure 22. bucket = bucket + water")
 
-Incrementing by one, or adding some value to a variable is in fact so commonplace in all programming that there is even syntactic sugar for it. *Syntactic Sugar* is a redundant grammar added to a programming language for reasons of convenience. It helps reduce typing, can increase comprehension or expressiveness, and (like sugar) makes the programmer happier. The following statements all add 1 to `counter`.
-
-增加一个, 或者添加一些值到变量在所有的编程中是非常常见的, 甚至有语法糖。 * Syntactic Sugar *是为了方便起见而添加到编程语言的冗余语法。 它有助于减少打字, 可以增加理解或表达力, (如糖)使程序员更快乐。 以下语句都将1添加到“counter”。
+增加一个, 或者添加一些值到变量在所有的编程中是非常常见的, 甚至有语法糖。 *Syntactic Sugar* 是为了方便起见而添加到编程语言的冗余语法。 它有助于减少打字, 可以增加理解或表达力, (如糖)使程序员更快乐。 以下语句都将 1 添加到 `counter`。
 
 ```cpp
 counter = counter + 1; // original form
@@ -589,9 +560,7 @@ int main(){
 }
 ```
 
-Yes, it's a lot less typing, and there are many ways to make it more concise. Here is one way.
-
-是的, 这是一个更少的打字, 有很多方法, 使其更简洁。 这里有一种方法。
+是的, 这减少了很多字数, 有很多方法, 使其更简洁。 这里有一种方法。
 
 ```cpp
 #include <iostream>
@@ -609,9 +578,7 @@ int main(){
 }
 ```
 
-The answer is still `012345`. The postfix incrementing operator will increment the variable even while it sits inside an expression. Now let's try the prefix version.
-
-答案仍然是“012345”。 后缀增量操作符将增加变量, 即使它位于表达式内。 现在让我们尝试前缀版本。
+答案仍然是“012345”。 即使它位于表达式内, 后缀增量操作符也将增加变量。 现在让我们尝试前缀版本。
 
 ```cpp
 #include <iostream>
@@ -629,9 +596,7 @@ int main(){
 }
 ```
 
-If you got the answer `123456`, that is no mistake! The prefix incrementing operator is different from its postfix sister in this very way. With `counter` initialized as 0, `++counter` would evaluate to 1, while `counter++` would still evaluate to 0 (but an incremented version of `counter` would be left over for later use). The output for the following example is `1112`.
-
-如果你得到答案`123456`, 这是没有错误！ 前缀增量运算符与其后缀姐妹以这种方式不同。 在计数器初始化为0的情况下, “++ counter”将计算为1, 而“counter ++”仍将计算为0(但是计数器的增量版本将留作后来使用)。 以下示例的输出为`1112`。
+如果你得到答案 `123456`, 这是正确的！ 前缀增量运算符与其后缀姐妹不同。 在计数器初始化为0的情况下, `++ counter` 将计算为1, 而 `counter ++` 仍将计算为0 (但是计数器的增量版本将留作后来使用)。 以下示例的输出为 `1112`。
 
 ```cpp
 #include <iostream>
@@ -647,39 +612,26 @@ int main(){
 }
 ```
 
-For arithmetic completeness, I should mention that the subtractive *decrementing* operator (counter--) also exists. Also, as you might have guessed by now, if one can say `counter + 1`, then a C compiler would also recognize the other classic arithmetic like `counter - 3` (subtraction), `counter * 2` (asterisk is multiplication), `counter / 2` (division), and overriding the order of operations by using parentheses, such as `(counter + 1) / 2` evaluating to a different result than `counter + 1 / 2`. Putting a negative sign before a variable will also do the right thing and negate it, as if it were being subtracted from zero. C extends this basic palette of maths operators with boolean logic and bitwise manipulation; I will introduce them in Variables part 2.
+为了算术的完备性, 减法 *decrementing* (*减量*) 运算符 (counter--) 也是存在的。 另外, 你现在可能已经猜到, 如果一方面可以写 `counter + 1`, 那么C编译器也会识别其他经典算法, 如 `counter-3` (减法), `counter * 2` (乘法), `counter / 2` (除法), 并通过使用括号来重写操作的顺序, 例如 `(counter + 1) / 2` 计算结果与 `counter + 1 / 2` 不同。 在变量之前放一个负号也会做正确的事情, 否定它, 就好像它被从零减去一样。 C 使用布尔逻辑和按位操作扩展了数学运算符的基本架构; 我将在变量第2部分中介绍它们。
 
-对于算术完备性, 我应该提到减法*减量*运算符(counter--)也存在。 另外, 你现在可能已经猜到, 如果一个人可以说“counter + 1”, 那么C编译器也会识别其他经典算法, 如“counter-3”(减法), “counter * 2” ), `counter / 2`(除法), 并通过使用括号来重写操作的顺序, 例如`(counter + 1)/ 2`计算结果与计数器+ 1/2不同。 在变量之前放一个负号也会做正确的事情, 否定它, 就好像它被从零减去一样。 C使用布尔逻辑和按位操作扩展了数学运算符的基本调色板; 我将在变量第2部分中介绍它们。
+还有一些更多的要点来了解变量, 但我们将采取我们迄今为止学到的, 并以乐趣的名义去运行它。 在此期间, 给自己一点鼓励, 毕竟已经看了这么多了！ 你学习了什么是变量, 以及如何对它们执行基本算术。 你还学习了放在变量名之前和之后的 ++ 操作符的作用以及他们的不同。
 
-There are a few more essentials to learn about variables, but we're going to take what we've learned so far and run with it in the name of fun. In the meantime, give yourself another pat on the back for making it this far! You learned what variables are, and how to perform basic arithmetic on them. You also learned what the ++ operator does when placed before and after a variable name.
+C++ 语言的名称是从从 C 语言加一而来。
 
-还有一些更多的要点来了解变量, 但我们将采取我们迄今为止学到的, 并以乐趣的名义运行它。 在此期间, 给自己另一个拍在背上, 使它这么远！ 你学习了什么变量, 以及如何对它们执行基本算术。 你还学习了当放在变量名之前和之后++操作符的作用。
-
-The C++ language gets its name from being the C language plus one.
-
-C ++语言的名称从C语言加一。
-
-## Conclusion
 ## 总结
 
-Congratulations on getting through the first few pages of this introduction to C++. With these basic concepts, you should be able to explore plenty far on your own, but I will admit that it is not enough to prepare you to comprehend the code examples in the rest of ofBook. Because of limited paper resources, what you've seen here is a "teaser" chapter for a necessarily lengthier introduction to the C++ language. That version of this chapter got so big that it is now its own book — available unabridged on the web, and possibly in the future as its own companion book alongside ofBook. Teaching the C++ language to non-programmers is indeed a large subject all itself, which could not be effectively condensed to 35 pages, let alone the 100+ page book it grew to be. If you're serious about getting into openFrameworks, I highly recommend you stop and read the unabridged version of this chapter before continuing in ofBook, so that you may understand what you are reading. You will find those materials [here](https://github.com/openframeworks/ofBook/blob/master/chapters/cplusplus_basics/unabridged.md)
+恭喜您完成本 C++ 简介的前几页。有了这些基本概念, 你应该能够自己探索很多, 但我承认, 这还不足以让你理解本书其余部分的代码示例。由于纸张资源有限, 您在这里看到的是一个“前导”章节, 用于对 C++ 语言进行必要的更长的介绍。这个版本的本章变得如此之大, 以至于它现在自成一本书了 - 在网络上可以毫无瑕疵地, 可能在未来作为本书的伴随书。将 C++ 语言教给非程序员确实是一个很大的课题, 它本身无法有效地集中到35页, 更不用说100+的页面书。如果你真的想进入 openFrameworks, 我强烈建议你在继续读书之前阅读本章的未修订版本, 这样你就可以理解你正在阅读的内容。你可以在这里这些材料[这里](https://github.com/openframeworks/ofBook/blob/master/chapters/cplusplus_basics/unabridged.md)
 
-恭喜您完成本C ++简介的前几页。有了这些基本概念, 你应该能够自己探索很多, 但我承认, 还不足以让你理解本书其余部分的代码示例。由于纸张资源有限, 您在这里看到的是一个“前导”章节, 用于对C ++语言进行必要的更长的介绍。这个版本的本章变得如此之大, 以至于它现在是自己的书 - 在网络上可以毫无瑕疵地, 可能在未来作为自己的伴随书与书。将C ++语言教给非程序员确实是一个很大的课题, 它本身无法有效地集中到35页, 更不用说100+的页面书。如果你认真进入openFrameworks, 我强烈建议你在继续读书之前停止阅读本章的未修订版本, 这样你就可以理解你正在阅读的内容。你会发现这些材料[这里](https://github.com/openframeworks/ofBook/blob/master/chapters/cplusplus_basics/unabridged.md)
-
-## PS.
 ## 附上.
 
 Stopping the chapter here is by no means intended to separate what is important to learn about C++ from what is not important. We have simply run out of paper. In lieu of how important the rest of this intro to C++ is, and based on ofZach's teaching experience, here is more of what you'll find in the unabridged version:
 
-停止这里的章节绝不是意在分离什么是重要的, 了解C ++从什么不重要。 我们只是用完了纸。 代替这个介绍C ++的其余部分是多么重要, 并基于Zach的教学经验, 这里更多的是你会发现在未删节的版本：
+停止这里的章节绝不是意在分离什么是重要的, 而是从什么是不重要的开始了解 C++。 我们只是有字数限制。 代替这个介绍 C++ 的其余部分是多么重要, 并基于 Zach 的教学经验, 你会在未删节的版本里学到更多一下内容：
 
-+ Variables exist for different periods of time - some for a long time, and some for a small blip in your program's lifecycle. This subject of *scope* is covered in the unabridged version of this book, entitled *Variables (part 2)*.
-+ 变量存在不同的时间段 - 有些是长时间, 有些是程序的生命周期中的小blip。 *范围*的主题在本书的未减损版本中标题为*变量(第2部分)*。
++ 变量存在不同的时间段 - 有些是长时间, 有些是程序的生命周期中的小片段。 *范围*的主题在本书的未减损版本中标题为*变量(第2部分)*。
 
-+ Variables have a *data type*. For example, one holds a number while another holds some text. More about that in *Fundamental Types*.
-+ 变量具有*数据类型*。 例如, 一个保存一个数字, 而另一个保存一些文本。 更多关于*基本类型*。
++ 变量具有*数据类型*。 例如, 一方面保存一个数字, 而另一方面保存一些文本。 更多关于*基本类型*。
 
-+ It's important to reiterate that unlike Processing, variables do not necessarily start with a zero value. You must initialize them with your desired value, and otherwise there's no telling what will be waiting there for you. You'll find additional discussion of this phenomenon in the introduction to arrays.
 + 重要的是要重申, 与Processing不同, 变量不一定从零开始。 你必须用你想要的值初始化他们, 否则没有告诉你会在那里等你。 你将在数组的介绍中找到关于这种现象的更多讨论。
 
 > 
