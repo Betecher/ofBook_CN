@@ -251,18 +251,13 @@ for(int i=0; i<NBALLS; i++){
 
 ## 从你的类中创建更多的对象：属性和构造函数
 
-As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a method that allows us to define these characteristics and lets us access them. Because we want to do this right after creating the object, let's do this in the method called `setup()`.  We will modify it to pass in some of the objects properties, let's say its position and dimension. First let's do this in the Ball definitions file (*.h):
-
-如我们所见, 每个对象都有一组由其变量 (位置, 速度, 方向和维度)定义的属性。面向对象编程的另一个优点是所创建的对象可以对于它们的每个属性具有不同的值。为了让我们更好地控制每个对象, 我们可以有一个方法, 允许我们定义这些特性, 并让我们访问它们。因为我们希望在创建对象后立即执行此操作, 所以让我们在名为`setup ()`的方法中执行此操作。我们将修改它来传递一些对象属性, 让我们说它的位置和维度。首先让我们在球定义文件 (* .h)中这样做：
-
+如我们所见, 每个对象都有一组由其变量 (位置, 速度, 方向和维度)定义的属性。面向对象编程的另一个优点是所创建的对象可以对它们的每个属性赋予不同的值。为了让我们更好地控制每个对象, 我们有一个方法, 允许我们定义这些特性, 并让我们访问它们。因为我们希望在创建对象后立即执行此操作, 所以让我们在名为 `setup ()` 的方法中执行此操作。我们将修改它来传递一些对象属性, 让我们说它的位置和维度。首先让我们在球定义文件 (*.h) 中做些改动：
 
 ```cpp
 void setup(float _x, float _y, int _dim);
 ```
 
-We'll need to update the Ball implementation (*.cpp) file to reflect these changes.
-
-我们需要更新Ball实现 (* .cpp)文件以反映这些更改。
+我们需要更新Ball实现 (*.cpp) 文件以反映这些更改。
 
 ```cpp
 void Ball::setup(float _x, float _y, int _dim){
@@ -275,9 +270,7 @@ void Ball::setup(float _x, float _y, int _dim){
 }
 ```
 
-Your Ball.cpp file should look like this by now:
-
-你的Ball.cpp文件现在应该如下所示：
+你的 Ball.cpp 文件应该如下所示：
 
 ```cpp
 #include "Ball.h"
@@ -323,34 +316,20 @@ void Ball::draw(){
 }
 ```
 
-Now in the ofApp.cpp file we will need to run this newly implemented method right when we start our application so it will reflect the different settings on each object as they are created. So, in the `ofApp::setup()`
-
-现在在ofApp.cpp文件中, 我们需要在我们启动应用程序时立即运行这个新实现的方法, 以便在每个对象创建时反映不同的设置。所以, 在`ofApp :: setup ()`
-
+现在在 ofApp.cpp 文件中, 我们需要在我们启动应用程序时立即运行这个新实现的方法, 以便在每个对象创建时反映不同的设置。所以, 在 `ofApp::setup()` 做些更改:
 
 ```cpp
-for(int i=0; i<NBALLS; i++){
-
-	int size = (i+1) * 10; // defining the size of each ball based on its place in the array
-	int randomX = ofRandom( 0, ofGetWidth() ); //generate a random value bigger than 0 and smaller than our application screen width
-	int randomY = ofRandom( 0, ofGetHeight() ); //generate a random value bigger than 0 and smaller than our application screen height
-
-    myBall[i].setup(randomX, randomY, size);
+for (int i = 0 ; i < NBALLS; i++) {
+	//根据它在数组中的位置定义每个球的大小
+	int size = (i+1) * 10;
+	//生成大于0且小于应用程序屏幕宽度的随机值
+	int randomX = ofRandom(0, ofGetWidth());
+	//生成大于0并小于我们的应用程序屏幕高度的随机值
+	int randomY = ofRandom(0, ofGetHeight());
+	     
+	myBall[i].setup(randomX, randomY, size);
 }
 ```
-
-```cpp
-for (int i = 0; i <NBALLS; i ++){
-
-int size = (i + 1)* 10; //根据它在数组中的位置定义每个球的大小
-int randomX = ofRandom (0, ofGetWidth ()); //生成大于0且小于应用程序屏幕宽度的随机值
-int randomY = ofRandom (0, ofGetHeight ()); //生成大于0并小于我们的应用程序屏幕高度的随机值
-
-    myBall [i] .setup (randomX, randomY, size);
-}}
-```
-
-As you see it is now possible to directly control the objects properties on its creation. Now we'll just need to use the for loop from above to go through the balls to update and draw them in the respective functions.
 
 如你所见, 现在可以直接控制对象属性的创建。现在, 我们只需要使用上面的for循环, 通过球更新并在相应的函数中绘制它们。
 
@@ -360,52 +339,34 @@ myBall[i].update();
 myBall[i].draw();
 ```
 
-
-## Make Objects on the fly
 ## 快速创建对象
 
-While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
-Vectors are really great as they'll allow to create collections of objects without a predefined number of elements. They're quite dynamic and allow you to add objects on the fly (e.g. while your program is running) but also to remove them when you need longer need the objects. Think of them as elastic arrays.
-So, let's use them!
-Note: You'll be hearing about two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with mathematical vectors (e.g. forces).
+虽然很多时候你已经有了预定义数量的对象, 你需要创建和使用数组是正确的选择, 还有其他方法来创建多个对象, 提供其他优点: 欢迎向量登场!
 
+向量是非常伟大的, 因为他们允许创建对象的集合, 不会限制预定义数量的元素。它们是相当动态的, 允许你在运行时添加对象 (例如, 当你的程序运行时), 但是当你需要更多的对象时, 也可以删除它们。它们相当于有弹性的数组。
 
-虽然很多时候你已经有了预定义数量的对象, 你需要创建和使用数组是正确的选择, 还有其他方法来创建多个对象, 提供其他优点：welcome vectors！
-向量是非常伟大的, 因为他们将允许创建对象的集合, 没有预定义数量的元素。它们是相当动态的, 允许你在运行时添加对象 (例如, 当你的程序运行时), 但是当你需要更多的对象时, 也可以删除它们。把它们当成弹性数组。
 所以, 让我们使用他们！
-注意：在这本书中, 你会听到两种不同类型的向量。请不要混淆stl :: vectors (我们讨论的弹性数组类型)和数学向量 (例如力)。
+注意：在这本书中, 你会听到两种不同类型的向量。请不要混淆 stl::vectors (我们讨论的弹性数组类型) 和数学向量 (例如: 力)。
 
-To learn more about stl::vector check the "C++ basics" chapter or this short online tutorial: http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
+要了解有关 stl::vector的更多信息, 请查看“ C++基础 ”一章或以下简短的在线教程：[http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html](http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html)
 
-要了解有关stl :: vector的更多信息, 请查看“C ++基础”一章或以下简短的在线教程：http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
-
-Back to our beloved ofApp.h file, let's define a vector of `Ball` objects by typing:
-
-回到我们所爱的ofApp.h文件, 让我们通过键入定义一个`Ball`对象的向量：
+回到我们所爱的 ofApp.h 文件, 让我们定义一个 `Ball` 对象的向量：
 
 ```cpp
 vector <Ball> myBall;
 ```
 
-In this expression we're creating a type (vector) of type (Ball pointers) and naming it myBall.
-Now, let's head to our (.cpp) and start cooking!
-Ignore the `setup()`, `update()` and `draw()` methods in the ofApp for now, let's jump to `ofApp::mouseDragged(...)` method. This method constantly listens to the mouse drag action and if it has changed it reveals its values (position and button state) to us.
-
-在这个表达式中, 我们创建一个类型 (向量)的类型 (球指针), 并命名为myBall。
+在这个表达式中, 我们创建一个类型 (向量) 的类型 (球指针), 并命名为myBall。
 现在, 让我们来到我们的 (.cpp), 开始烹饪！
-在ofApp中忽略`setup ()`, `update ()`和`draw ()`方法, 让我们跳转到`ofApp :: mouseDragged (...)`方法。这种方法不断地监听鼠标拖动动作, 如果它改变了它显示它的值 (位置和按钮状态)给我们。
+忽略 ofApp 中的 `setup ()`, `update ()` 和 `draw ()` 方法, 让我们跳转到 `ofApp::mouseDragged (...)` 方法。这种方法不断地监听鼠标拖动动作, 如果它改变了它显示它的值 (位置和按钮状态) 给我们。
 
 ```cpp
 void ofApp::mouseDragged(int x, int y, int button){
 }
 ```
 
-In this method we're listening to the dragging activity of your mouse, and we'll use this to create interaction! So let's just create some code to create `Ball`s and add them to our program when we drag the mouse.
-The dragging activity of your mouse or trackpad is an ubiquitous, simple but also very gestural source of data and we'll use this simplicity to create interaction! Let's add some code to create `Ball`s and add them to our program when we drag the mouse.
-
-在这种方法中, 我们正在监听鼠标的拖动活动, 我们将使用它来创建交互！因此, 让我们创建一些代码来创建`Ball`s, 并在我们拖动鼠标时将它们添加到我们的程序中。
-你的鼠标或触控板的拖动活动是一个无处不在, 简单但也是非常手势的数据源, 我们将使用这种简单性创建交互！让我们添加一些代码来创建`Ball`s, 并在我们拖动鼠标时将它们添加到我们的程序中。
-
+在这种方法中, 我们正在监听鼠标的拖动活动, 我们将使用它来创建交互！因此, 让我们创建一些代码来创建 `Ball`s, 并在我们拖动鼠标时将它们添加到我们的程序中。
+你的鼠标或触控板的拖动活动是无处不在的, 简单但也是非常直觉的数据源, 我们将使用这种简单的接口来创建交互！让我们添加一些代码来创建 `Ball`s, 并在我们拖动鼠标时将它们添加到我们的程序中。
 
 ```cpp
 void ofApp::mouseDragged(int x, int y, int button){
@@ -415,24 +376,11 @@ void ofApp::mouseDragged(int x, int y, int button){
 }
 ```
 
-```cpp
-void ofApp :: mouseDragged (int x, int y, int button){
-    球温度; //创建球对象
-    tempBall.setup (x, y, ofRandom (10,40)); //设置其初始状态
-    myBall.push_back (tempBall); //将其添加到向量
-}}
-```
+我们的代码中的一些新东西：我们从声明一个临时对象开始, 把它当作是一个真实对象的占位符 - 这将是在向量内！ - 我们通过将 `x` 和 `y` 鼠标拖动坐标赋值给它的设置变量来定义它的初始属性。然后, 我们使用这个临时对象作为占位符来添加 `Ball` 对象到我们的向量。
 
-A few new things in our code: we begin by declaring a temporary object, think of it as a placeholder for the real object - that will be inside the vector! - we them define its initial properties by assigning the `x` and `y` mouse drag coordinates to its setup variables. Afterwards, we use this temporary object as a placeholder to add `Ball` objects to our vector.
+回到我们的更新和绘制方法。我们可以添加所需的 “for循环” 来遍历向量中的对象来更新和绘制它们, 就像我们对数组一样。这一次, 虽然我们没有声明一个变量存储最大数量的对象, 而是向量对象提供了一个方便的方法, 我们可以调用来知道它们的大小 (`size ()`)。
 
-我们的代码中的一些新东西：我们从声明一个临时对象开始, 认为它是一个真实对象的占位符 - 这将是在向量内！ - 我们通过将`x`和`y`鼠标拖动坐标赋值给它的设置变量来定义它的初始属性。然后, 我们使用这个临时对象作为占位符来添加`Ball`对象到我们的向量。
-
-Back to our update and draw methods. We can add the needed 'for loops' to iterate over the objects in the vector to update and draw them like we would do with arrays. This time though we didn't declare a variable that stores the maximum number of objects but instead, the vector object provides us with a handy method we can call to know their size (`size()`). 
-See code below for `update()`
-
-回到我们的更新和绘制方法。我们可以添加所需的“for循环”来遍历向量中的对象来更新和绘制它们, 就像我们对数组一样。这一次, 虽然我们没有声明一个变量存储最大数量的对象, 而是向量对象提供了一个方便的方法, 我们可以调用来知道它们的大小 ('size ()')。
-请参见下面的代码`update ()`
-
+请参见下面关于 `update ()` 的代码。
 
 ```cpp
 for (int i = 0; i<myBall.size(); i++) {
@@ -440,9 +388,7 @@ for (int i = 0; i<myBall.size(); i++) {
 }
 ```
 
-and for `draw()`:
-
-和`draw ()`：
+以及 `draw()`：
 
 ```cpp
 for (int i = 0 ; i<myBall.size(); i++) {
@@ -450,11 +396,8 @@ for (int i = 0 ; i<myBall.size(); i++) {
 }
 ```
 
-Now the 'for' loop iterates over all objects in the vector without us needing to specify the exact number of items beforehand. It gets adjusted on the fly thanks to `size()`.
+现在 'for' 循环会遍历向量中的所有对象, 而不需要事先指定项目的确切数量。这都归功于 `size()` 函数。
 
-现在'for'循环遍历向量中的所有对象, 而不需要事先指定项目的确切数量。它被调整的飞行感谢`size ()`。
-
-## Making and delete as you wish - using vectors
 ## 使用向量来创建和删除
 
 If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become sluggish because there are just way too many objects on screen. As we just mentioned vectors are very special as we can add and remove elements dynamically. That's their magic: vectors are elastic!
