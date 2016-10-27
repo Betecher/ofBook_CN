@@ -26,90 +26,58 @@ OOP 中常常使用的以下的术语和定义:
 
 那就让让我们来看看它是如何工作的：
 
-First of all let's create the two class files: 
-If you're using Xcode as your IDE (it stands for: Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the pop-up menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your 'src' folder: 'Ball.h' and 'Ball.cpp'.
-If you are using Code::Blocks create a new project from empty one given inside the "examples" directory (or check out the ProjectGenerator). Copy the folder "empty" and rename it to "OOP". Change into this new directory, copy the "emptyExample" and rename it to "ball1". Inside the "ball1" directory rename "emptyExample.workspace" to "ball1.workspace" and "emptyExample.cbp" to "ball1.cbp". Now you have a dedicated directory and a dedicated project to play around with. Open "ball1.cbp" with Code::Blocks , right-click on the "emptyExample" workspace, select "Properties" (last entry in the list) and change the title of the project. The "src" directory in your project contains all the files you need to edit in this chapter. Add two new files inside the 'src' directory by either using 'File'->'New'->'Empty File' or pressing Tab+Ctrl+N. One file should be named 'Ball.h' and the other 'Ball.cpp'.
-Now let's edit your class header (.h) file. Feel free to delete all its contents and let's start from scratch:
-Declare a class in the header file (.h). In this case, the file name should be Ball.h. 
-Follow the code below and type into your own Ball.h file, please note the comments I've included to guide you along.
-
 首先让我们创建两个类文件：
-如果你使用 Xcode 作为你的 IDE（它代表：集成开发环境）, 选择src文件夹, 左点击（或CTRL +点击）, 在弹出菜单上选择'新文件', 你会被采取到一个新的窗口菜单, 选择你正在开发的适当的平台（OS X或iOS）, 选择C ++类, 最后选择一个名称（我们使用'球'）。你会自动看到'src'文件夹中的两个文件：'Ball.h'和'Ball.cpp'。
-如果你使用Code :: Blocks在“examples”目录中创建一个来自空的新项目（或者检查ProjectGenerator）。复制文件夹“empty”并将其重命名为“OOP”。切换到这个新目录, 复制“emptyExample”并将其重命名为“ball1”。在“ball1”目录中, 将“emptyExample.workspace”重命名为“ball1.workspace”, 将“emptyExample.cbp”重命名为“ball1.cbp”。现在你有一个专用的目录和一个专门的项目来玩。用Code :: Blocks打开“ball1.cbp”, 右键单击“emptyExample”工作区, 选择“属性”（列表中的最后一个条目）并更改项目的标题。项目中的“src”目录包含本章需要编辑的所有文件。通过使用'文件' - >'新' - >'空文件'或按Tab + Ctrl + N, 在'src'目录中添加两个新文件。一个文件应命名为“Ball.h”, 另一个文件应为“Ball.cpp”。
+
+如果你使用 Xcode 作为你的 IDE（它代表：集成开发环境）, 选择src文件夹, 左点击（或 CTRL + 点击）, 在弹出菜单上选择'新文件', 你会被采取到一个新的窗口菜单, 选择你正在开发的适当的平台（OS X 或 iOS）, 选择 C++ 类, 最后选择一个名称（我们使用'球'）。你会自动看到 'src' 文件夹中的两个文件：'Ball.h' 和 'Ball.cpp'。
+
+如果你使用 Code::Blocks 在 “examples” 目录中创建一个来自空的新项目（或者检查 ProjectGenerator）。复制文件夹 “empty” 并将其重命名为 “OOP”。切换到这个新目录, 复制 “emptyExample” 并将其重命名为 “ball1”。在 “ball1” 目录中, 将 “emptyExample.workspace” 重命名为 “ball1.workspace”, 将 “emptyExample.cbp” 重命名为 “ball1.cbp”。现在你有一个专用的目录和一个专门的项目了。用 Code::Blocks 打开 “ball1.cbp”, 右键单击 “emptyExample” 工作区, 选择“属性”（列表中的最后一个条目）并更改项目的标题。项目中的 “src” 目录包含本章需要编辑的所有文件。通过使用 '文件' -> '新' -> '空文件'或按 Tab + Ctrl + N, 在 'src' 目录中添加两个新文件。一个文件应命名为 “Ball.h”, 另一个文件应为 “Ball.cpp”。
+
 现在让我们编辑你的类头文件（.h）。随意删除其所有内容, 让我们从头开始：
-在头文件（.h）中声明一个类。在这种情况下, 文件名应为Ball.h.
-按照下面的代码, 并输入到您自己的Ball.h文件, 请注意我包括的评论, 以指导您。
+
+在头文件（.h）中声明一个类。在这种情况下, 文件名应为 Ball.h.
+按照下面的代码, 并输入到您自己的 Ball.h 文件, 请注意我的注释, 它可以帮助你理解代码。
 
 
 ```cpp
-#ifndef _BALL // if this class hasn't been defined, the program can define it
-#define _BALL // by using this if statement you prevent the class to be called more than once which would confuse the compiler
-#include "ofMain.h" // we need to include this to have a reference to the openFrameworks framework
-class Ball {
+#ifndef _BALL // 如果这个类没有被定义, 程序可以定义它
+#define _BALL // 通过使用这个if语句, 防止类被多次调用, 否则会混淆编译器
+#include "ofMain.h" // 我们需要包含这个来引用openFrameworks框架
+类
 
-    public: // place public functions or variables declarations here
-
-    // methods, equivalent to specific functions of your class objects
-    void setup();	//setup method, use this to setup your object's initial state
-    void update();  // update method, used to refresh your objects properties
-    void draw();    // draw method, this where you'll do the object's drawing 
-
-    // variables
-    float x;        // position
+class Ball{
+    
+    public: // 在这里放置公共函数和变量声明
+    
+    //方法, 等同于你创建的类对象的具体函数
+    void setup();  // setup() 方法, 使用它来设置对象的初始状态
+    void update(); // update() 方法, 用它来刷新你的对象属性
+    void draw();   // draw() 方法, 你将在这里做对象的绘制
+    
+    // 变量
+    float x;       // 位置
     float y;
-    float speedY;   // speed and direction
+    float speedY;  // 速度和方向
     float speedX;
-    int dim;        // size
-    ofColor color;  // color using ofColor type
+    int dim;       // 大小
+    ofColor color; // 使用 ofColor 类的 color
+    
+    Ball();        // constructor 用于初始化对象, 如果没有传递属性, 程序会将它们设置为默认值
+    
+    private:       // 这里放置私有函数或变量声明
+};// 别忘了分号
 
-    Ball();  // constructor - used to initialize an object, if no properties are passed the program sets them to the default value
-    private: // place private functions or variables declarations here
-}; // don't forget the semicolon!
 #endif
 ```
 
-```cpp
-#ifndef _BALL //如果这个类没有被定义, 程序可以定义它
-#define _BALL //通过使用这个if语句, 防止类被多次调用, 这将混淆编译器
-#include“ofMain.h”//我们需要包含这个来引用openFrameworks框架
-类Ball {
+我们已经生命力 Ball 类的头文件（成分列表）, 现在让我们到烹饪部分看看这些成分可以做什么！
 
-    public：//在这里放置公共函数或变量声明
+请注意 `#include` 标记。这是一种告诉 [编译器](http://www.cplusplus.com/doc/tutorial/introduction/ "Compiler introduction on cplusplus.com") ([维基百科](https://en.wikipedia.org/wiki/Compiler "Wikipedia on compilers")) 关于要包括在实现文件中的任何文件。当程序被编译时, 这些 `#include` 标签将被它们所引用的原始文件所替换。
 
-    //方法, 等同于你的类对象的具体函数
-    void setup（）; //设置方法, 使用它来设置对象的初始状态
-    void update（）; //更新方法, 用于刷新对象的属性
-    void draw（）; //绘制方法, 这里你将做对象的绘制
+'if 语句'（#ifndef）是一种防止可能出现的头文件重复的方法。这被称为 [include guard / 包含守卫](https://en.wikipedia.org/wiki/Include_guard "Wikipedia on include guards")。使用此模式有助于编译器只包含文件一次, 并避免重复。但是我们现在不用担心, 我们以后会再提到。
 
-    //变量
-    float x; //位置
-    float y;
-    float speedY; //速度和方向
-    float speedX;
-    int dim; // size
-    的颜色; // color使用color类型
+我们现在将为一个球对象创建一个类。这个球将具有颜色, 速度和方向属性, 它将移动穿过屏幕和反弹。我们将使用随机属性创建这些属性中的一些, 但是我们会小心地为其运动行为创建正确的逻辑。
 
-    球（）; // constructor  - 用于初始化对象, 如果没有传递属性, 程序将它们设置为默认值
-    private：//在这里放置私有函数或变量声明
-}; //不要忘记分号！
-＃万一
-```
-
-We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part to see what these ingredients can do!
-Please notice the '#include' tag. This is a way to tell the [compiler](http://www.cplusplus.com/doc/tutorial/introduction/ "Compiler introduction on cplusplus.com") ([wikipedia](https://en.wikipedia.org/wiki/Compiler "Wikipedia on compilers")) about any files to include in the implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to.
-The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur. This is called an [include guard](https://en.wikipedia.org/wiki/Include_guard "Wikipedia on include guards"). Using this pattern helps the compiler to only include the file once and avoid repetition. Don't worry about this now, we'll talk about it later on!
-
-We will now create a class for a ball object. This ball will have color, speed and direction properties: it will move across the screen and bounce against the wall. Some of these properties we will create with randomized attributes but we'll be careful to create the right logic for its motion behaviours.
-
-Here's how you can write the class *.cpp file, the implementation file:
-
-我们已经宣布Ball类头文件（成分列表）, 现在让我们到烹饪部分看看这些成分可以做什么！
-请注意“#include”标记。这是一种告诉[编译器]（http://www.cplusplus.com/doc/tutorial/introduction/“cplusplus.com上的编译器简介”）（[wikipedia]（https://en.wikipedia.org） / wiki / Compiler“Wikipedia on compilers”））关于要包括在实现文件中的任何文件。当程序被编译时, 这些'#include'标签将被它们所引用的原始文件所替换。
-'if语句'（#ifndef）是一种防止可能容易出现的头文件重复的方法。这被称为[包括守卫]（https://en.wikipedia.org/wiki/Include_guard“维基百科包含守卫”）。使用此模式有助于编译器只包含文件一次, 并避免重复。现在不要担心, 我们以后再谈吧！
-
-我们现在将为一个球对象创建一个类。这个球将具有颜色, 速度和方向属性：它将移动穿过屏幕和反弹在墙上。我们将使用随机属性创建这些属性中的一些, 但是我们会小心为其运动行为创建正确的逻辑。
-
-这里是如何编写类* .cpp文件, 实现文件：
+在这里教你如何编写类 *.cpp 文件, 实现文件：
 
 ```cpp
 #include "Ball.h"
@@ -117,94 +85,50 @@ Ball::Ball(){
 }
 
 void Ball::setup(){
-    x = ofRandom(0, ofGetWidth());      // give some random positioning
+    x = ofRandom(0, ofGetWidth());      // 创建一些随机的位置
     y = ofRandom(0, ofGetHeight());
-
-    speedX = ofRandom(-1, 1);           // and random speed and direction
+    
+    speedX = ofRandom(-1, 1);           // 创建随机速度与方向
     speedY = ofRandom(-1, 1);
-
+    
     dim = 20;
-
-    color.set(ofRandom(255),ofRandom(255),ofRandom(255)); // one way of defining digital color is by addressing its 3 components individually (Red, Green, Blue) in a value from 0-255, in this example we're setting each to a random value
+    
+    //定义数字颜色的一种方法是通过以0-255的值单独寻址其3个组件（红色, 绿色, 蓝色）, 在此示例中, 我们将每个组件设置为随机值
+    color.set(ofRandom(255), ofRandom(255), ofRandom(255));
+    
 }
 
 void Ball::update(){
-    if(x < 0 ){
+    if (x < 0) {
         x = 0;
         speedX *= -1;
-    } else if(x > ofGetWidth()){
+    } else if (x > ofGetWidth()){
         x = ofGetWidth();
         speedX *= -1;
     }
-
-    if(y < 0 ){
+    
+    if (y < 0) {
         y = 0;
         speedY *= -1;
-    } else if(y > ofGetHeight()){
+    } else if (y > ofGetHeight()){
         y = ofGetHeight();
         speedY *= -1;
     }
-
-    x+=speedX;
-    y+=speedY;
+    
+    x += speedX;
+    y += speedY;
 }
 
 void Ball::draw(){
     ofSetColor(color);
-    ofCircle(x, y, dim);
+    ofDrawCircle(x, y, dim);
 }
 ```
 
-```cpp
-#include“Ball.h”
-Ball :: Ball（）{
-}}
+现在, 这是一个简单的程序, 我们可以把它写在我们的 .App（.h 和 .cpp）文件中, 如果我们想在其他地方重用这个代码, 这将是非常有意义的。面向对象编程的优点之一是重用。想象一下, 我们要创造数千个这样的球。如果没有 OOP 的话代码可以很容易混乱。
 
-void Ball :: setup（）{
-    x = ofRandom（0, ofGetWidth（））; //给一些随机定位
-    y = ofRandom（0, ofGetHeight（））;
+通过创建我们自己的类, 我们可以重新创建尽可能多的对象, 并在需要时调用适当的方法, 保持我们的代码干净, 高效。在一个更实际的例子中, 想到为每个用户界面（UI）元素（按钮, 滑块等）创建一个类, 然后将它们部署到你的程序中, 而且在将来包含和重用它们程式。
 
-    speedX = ofRandom（-1, 1）; //和随机速度和方向
-    speedY = ofRandom（-1, 1）;
-
-    dim = 20;
-
-    color.set（ofRandom（255）, ofRandom（255）, ofandand（255））; //定义数字颜色的一种方法是通过以0-255的值单独寻址其3个组件（红色, 绿色, 蓝色）, 在此示例中, 我们将每个组件设置为随机值
-}}
-
-void Ball：update（）{
-    if（x <0）{
-        x = 0;
-        speedX * = -1;
-    } else if（x> ofGetWidth（））{
-        x = ofGetWidth（）;
-        speedX * = -1;
-    }}
-
-    if（y <0）{
-        y = 0;
-        speedY * =  -  1;
-    } else if（y> ofGetHeight（））{
-        y = ofGetHeight（）;
-        speedY * = -1;
-    }}
-
-    x + = speedX;
-    y + = speedY;
-}}
-
-void Ball :: draw（）{
-    ofSetColor（color）;
-    ofCircle（x, y, dim）;
-}}
-```
-
-Now, this is such a simple program that we could have written it inside our ofApp(.h and .cpp) files and that would make sense if we didn't want to reuse this code elsewhere. One of the advantages of Object Oriented Programming is reuse. Imagine we want to create thousands of these balls. The code could easily get messy without OOP. By creating our own class we can later re-create as many objects as we need from it and just call the appropriate methods when needed keeping our code clean and efficient. In a more pragmatic example think of creating a class for each of your user-interface (UI) elements (button, slider, etc) and how easy it would be to then deploy them in your program but also to include and reuse them in future programs.
-
-现在, 这是一个简单的程序, 我们可以把它写在我们的.App（.h和.cpp）文件中, 如果我们不想在其他地方重用这个代码, 这将是有意义的。面向对象编程的优点之一是重用。想象一下, 我们要创造数千个这样的球。代码可以很容易得到凌乱, 没有OOP。通过创建我们自己的类, 我们可以重新创建尽可能多的对象, 并在需要时调用适当的方法, 保持我们的代码干净, 高效。在一个更务实的例子中, 想到为每个用户界面（UI）元素（按钮, 滑块等）创建一个类, 然后将它们部署到你的程序中, 而且在将来包含和重用它们程式。
-
-
-## Make an Object from your Class
 ## 从你的类中创建一个对象
 
 Now that we've created a class let's make the real object! In your ofApp.h (header file) we'll have to declare a new object but first we need to include (or give the instructions to do so) your Ball class in our program. To do this we need to write:
@@ -810,4 +734,3 @@ Have fun!
 希望你喜欢这个简短的教程！
 玩的开心！
 
-00
