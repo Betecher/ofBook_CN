@@ -400,66 +400,36 @@ for (int i = 0 ; i<myBall.size(); i++) {
 
 ## 使用向量来创建和删除
 
-If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become sluggish because there are just way too many objects on screen. As we just mentioned vectors are very special as we can add and remove elements dynamically. That's their magic: vectors are elastic!
-So, let's also implement a way to delete them before we have way too many Balls.
+如果你运行前面的代码, 你会看到, 在很短的时间内, 你会创建大量的球, 但在某些时候, 你的系统可能会变得迟钝, 因为在屏幕上只能装下这么多的对象。正如我们刚刚提到的向量是非常特殊的, 因为我们可以动态添加和删除元素。这是他们的魔力：向量是弹性的！
 
-如果你运行前面的代码, 你会看到, 在很短的时间内, 你不仅会创建大量的球, 但在某些时候, 你的系统可能会变得迟钝, 因为在屏幕上只有太多的对象。正如我们刚刚提到的向量是非常特殊的, 因为我们可以动态添加和删除元素。这是他们的魔力：向量是弹性的！
-所以, 让我们实现一个方法删除它们之前, 我们有太多的球。
+所以, 在我们必须实现一个方法删除它们。
 
-On the `ofApp::MousePressed(...)` call we will loop though our vector and check the distance between the coordinates of the mouse with a particular `Ball` position. If this distance is smaller than the `Ball` radius then we know that we're clicking inside it and we can delete it. Because we're using the `vector.erase(...)` method we need to use an iterator (`myBall.begin()`). Iterators are pointing to some element in a larger contained group and have the ability to iterate through the elements of that range. See them as paths or links. In this very case they are a shortcut that references the first element of the vector as a starting point to access the vector element we really want to erase (`i`), thus `myBall.begin()+i`.
-
-在`ofApp :: MousePressed (...)`调用中, 我们将循环遍历我们的向量, 并检查鼠标的坐标与特定`Ball`位置之间的距离。如果这个距离小于'Ball'半径, 那么我们知道我们点击它, 我们可以删除它。因为我们使用`vector.erase (...)`方法, 我们需要使用一个迭代器 (`myBall.begin ()`)。迭代器指向一个更大的包含组中的一些元素, 并且能够遍历该范围的元素。将它们视为路径或链接。在这种情况下, 它们是一个快捷方式, 引用向量的第一个元素作为访问我们真正想要擦除的向量元素 (`i')的开始点, 因此`myBall.begin ()+ i`。
+在 `ofApp :: MousePressed (...)` 调用中, 我们将循环遍历我们的向量, 并检查鼠标的坐标与特定 `Ball` 位置之间的距离。如果这个距离小于'Ball'半径, 那么我们知道我们点击它, 我们可以删除它。因为我们使用 `vector.erase (...)` 方法, 我们需要使用一个迭代器 ( `myBall.begin ()` )。迭代器指向一个更大的包含组中的一些元素, 并且能够遍历该范围的元素。将它们视为路径或链接。在这种情况下, 它们是一个快捷方式, 引用向量的第一个元素作为访问我们真正想要擦除的向量元素 (`i`)的开始点, 因此 `myBall.begin()+i`。
 
 
 ```cpp
 for (int i =0; i < myBall.size(); i++) {
-    float distance = ofDist(x,y, myBall[i].x, myBall[i].y); // a method oF gives us to check the distance between two coordinates
-
+	  // ofDist 方法让我们检测两个坐标之间的距离
+    float distance = ofDist(x,y, myBall[i].x, myBall[i].y);
     if (distance < myBall[i].dim) {
-        myBall.erase(myBall.begin()+i); // we need to use an iterator/ reference to the vector position we want to delete
+			// 我们需要使用迭代器来引用我们需要删除的向量
+        myBall.erase(myBall.begin()+i);
     }
 }
 ```
 
-```cpp
-for (int i = 0; i <myBall.size (); i ++){
-    float distance = ofDist (x, y, myBall [i] .x, myBall [i] .y); //方法oF让我们检查两个坐标之间的距离
-
-    if (distance <myBall [i] .dim){
-        myBall.erase (myBall.begin ()+ i); //我们需要使用迭代器/引用我们要删除的向量位置
-    }}
-}}
-```
-
-But because there's always a time you might just want to destroy them all, vectors also have a very handy method to help you: `clear()`.
-Feel free to experiment and try using it yourself!
-
-但因为总有一个时间, 你可能只是想摧毁他们所有, 向量也有一个非常方便的方法来帮助你：clear ()。
+但总有一个时间点, 你可能想摧毁所有的向量, 这里也有一个非常方便的方法来帮助你: `clear()`。
 随意尝试, 尝试自己使用它！
 
 ```cpp
 balls.clear();
 ```
 
-
-## Quick intro to polymorphism (inheritance)
 ## 多态性简介 (继承)
 
+你现在已经发现了 OOP 的力量：创建一个类, 并从中创建尽可能多的对象, 根据应用程序的需要添加和删除。现在, 第二个让我们回到我们的烹饪比喻 (美味！), 想象你的饼干, 即使共享相同的饼干和面团, 使用一些不同的洒水, 以添加一些所需的变化, 我们的 cookie 罐选择！这也是 OOP 和继承的力量。它允许我们使用一个基类并添加一些特定的行为, 覆盖一个类的一些行为, 创建一个具有稍微不同行为的实例/对象的子集。这个伟大的事情是它的可重用性。我们使用父类作为起点, 使用它的所有功能, 但我们覆盖其中的一个方法, 给它更多的灵活性。回到我们的 `Ball` 类的初始版本, 我们将基于它的主要特征 (运动行为和形状)构建一些子类, 但是我们将在它的绘制方法中使用不同的颜色来区分每个继承的子类。
 
-You're now discovering the power of OOP: making a class and creating as many objects from that in an instant, adding and deleting by your application needs. Now, for a second let's go back to our cooking metaphor (yummy!) and imagine that your cookies, even though sharing the same cookie cutter and dough, are using some different sprinkles on each to add some desired variation to our cookie jar selection!
-This is also the power of OOP and inheritance. It allows us to use a base class and add some specific behaviours, overwriting some of the behaviours of a class, creating a subset of instances / objects with slightly different behaviours.
-The great thing about this is it's reusability. We're using the parent class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
-Going back to the initial version of our `Ball` class we'll build some child classes based on its main characteristics (motion behaviours and shape) but we'll distinguish each inherited sub-class by using a different color in its drawing method.
-
-你现在发现了OOP的力量：创建一个类, 并从中创建尽可能多的对象, 根据应用程序的需要添加和删除。现在, 第二个让我们回到我们的烹饪比喻 (美味！), 想象你的饼干, 即使共享相同的饼干和面团, 使用一些不同的洒水, 以添加一些所需的变化, 我们的cookie罐选择！
-这也是OOP和继承的力量。它允许我们使用一个基类并添加一些特定的行为, 覆盖一个类的一些行为, 创建一个具有稍微不同行为的实例/对象的子集。
-这个伟大的事情是它的可重用性。我们使用父类作为起点, 使用它的所有功能, 但我们覆盖其中的一个方法, 以给它更多的灵活性。
-回到我们的`Ball`类的初始版本, 我们将基于它的主要特征 (运动行为和形状)构建一些子类, 但是我们将在它的绘制方法中使用不同的颜色来区分每个继承的子类。
-
-
-Your Ball header file should look like this:
-
-你的球头文件应如下所示：
+你的头文件应如下所示：
 
 ```cpp
 #ifndef _BALL // if this class hasn't been defined, the program can define it
