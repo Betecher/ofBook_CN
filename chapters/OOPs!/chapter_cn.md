@@ -427,7 +427,7 @@ balls.clear();
 
 ## 多态性简介 (继承)
 
-你现在已经发现了 OOP 的力量：创建一个类, 并从中创建尽可能多的对象, 根据应用程序的需要添加和删除。现在, 第二个让我们回到我们的烹饪比喻 (美味！), 想象你的饼干, 即使共享相同的饼干和面团, 使用一些不同的洒水, 以添加一些所需的变化, 我们的 cookie 罐选择！这也是 OOP 和继承的力量。它允许我们使用一个基类并添加一些特定的行为, 覆盖一个类的一些行为, 创建一个具有稍微不同行为的实例/对象的子集。这个伟大的事情是它的可重用性。我们使用父类作为起点, 使用它的所有功能, 但我们覆盖其中的一个方法, 给它更多的灵活性。回到我们的 `Ball` 类的初始版本, 我们将基于它的主要特征 (运动行为和形状)构建一些子类, 但是我们将在它的绘制方法中使用不同的颜色来区分每个继承的子类。
+你现在已经发现了 OOP 的力量：创建一个类, 并从中创建尽可能多的对象, 根据应用程序的需要添加和删除。现在, 让我们回到我们的烹饪比喻, 想象你的饼干, 即使共享相同的饼干和面团, 也可以使用一些不同的变化, 以添加一些不用的变化, 比如 cookie 罐的选择！这也是 OOP 和继承的力量。它允许我们使用一个基类并添加一些特定的行为, 覆盖一个类的一些行为, 创建一个具有稍微不同行为的实例/对象的子集。这个伟大的事情是它的可重用性。我们使用父类作为起点, 使用它的所有功能, 但我们覆盖其中的一个方法, 给它更多的灵活性。回到我们的 `Ball` 类的初始版本, 我们将基于它的主要特征 (运动行为和形状)构建一些子类, 但是我们将在它的绘制方法中使用不同的颜色来区分每个继承的子类。
 
 你的头文件应如下所示：
 
@@ -460,37 +460,6 @@ class Ball {
 #endif
 ```
 
-```cpp
-#ifndef _BALL //如果这个类没有被定义, 程序可以定义它
-#define _BALL //通过使用这个if语句, 防止类被多次调用, 这将混淆编译器
-#include“ofMain.h”
-
-
-类Ball {
-    public：//在这里放置公共函数或变量声明
-
-    void setup ();
-    void update ();
-    void draw ();
-
-    //变量
-    float x;
-    float y;
-    float speedY;
-    float speedX;
-    int dim;
-
-    的颜色;
-
-    球 ();
-
-    私人的：
-};
-＃万一
-```
-
-Let's make some slight changes on the implementation file. Lets change the minimum and maximum values of the random size to larger values and set the position to the center of the screen. Make the source code look like this:
-
 让我们对实现文件进行一些细微的修改。允许将随机尺寸的最小值和最大值更改为较大值, 并将位置设置为屏幕中心。使源代码如下所示：
 
 ```cpp
@@ -512,83 +481,44 @@ void Ball::setup(){
 }
 ```
 
-We can leave the `update()` and `draw()` functions as they were.
-Now, let's start making child versions of this parent class.
-Create a new class set of files and name them `BallBlue`. Feel free to copy the code below.
-It's '.h' should look like this:
-
-我们可以保留`update ()`和`draw ()`函数。
+我们可以保留 `update()` 和 `draw()` 函数。
 现在, 让我们开始创建这个父类的子版本。
-创建一个新的类文件集, 并命名为`BallBlue`。请随意复制下面的代码。
+创建一个新的类文件集, 并命名为 `BallBlue`。请随意复制下面的代码。
 它的'.h'应该看起来像这样：
 
-
 ```cpp
-#pragma once                // another and more modern way to prevent the compiler from including this file more than once
-
+#pragma once                // 另一种更现代的方法来防止编译器多次包含此文件
 #include "ofMain.h"
-#include "Ball.h"            // we need to include the parent class, the compiler will include the mother/base class so we have access to all the methods inherited
+#include "Ball.h"            // 我们需要包括父类, 编译器将包括母/基类, 所以我们可以访问所有的方法并继承
 
-class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
+class BallBlue : public Ball {     // 设置类继承自'Ball'
     public:
-        virtual void draw();             // this is the only method we actually want to be different from the parent class
+        virtual void draw();             // 这是我们想要与父类不同的唯一方法
 };
 ```
 
-```cpp
-#pragma once //另一种更现代的方法来防止编译器多次包含此文件
-
-#include“ofMain.h”
-#include“Ball.h”//我们需要包括父类, 编译器将包括母/基类, 所以我们可以访问所有的方法继承
-
-class BallBlue：public Ball {//我们设置类继承自'Ball'
-    上市：
-        virtual void draw (); //这是我们实际想要与父类不同的唯一方法
-};
-```
-
-In the '.cpp' file we'll need to then specify what we want the new `draw()` method to behave differently from the one in the parent class.
-
-在'.cpp'文件中, 我们需要指定我们想要的新的`draw ()`方法的行为与父类中的行为不同。
+在 '.cpp' 文件中, 我们需要指定我们想要的新的 `draw ()` 方法的行为与父类中的行为不同。
 
 ```cpp
 #include "BallBlue.h"
 
 
 void BallBlue::draw(){
-    ofSetColor(ofColor::blue);    // this is a shortcut for full blue color ;)
+    ofSetColor(ofColor::blue);    // 这是设置蓝色的快捷方式
     ofCircle(x, y, dim);    
 }
 ```
 
-```cpp
-#include“BallBlue.h”
-
-
-void BallBlue :: draw (){
-    ofSetColor (ofColor :: blue); //这是一个完全蓝色的快捷方式;)
-    ofCircle (x, y, dim);
-}}
-```
-
-Now create two new classes on your own: `BallRed` and `BallGreen` based on the `Ball` class like `BallBlue`.
-Back to your 'ofApp.h'. Include the newly made classes and create one instance of each and in your 'ofApp.cpp' file. Initialize them and call their `update()` and `draw()` methods. A quick trick! Right before you call the `draw()` method, make this call:
-
-现在自己创建两个新类：`BallRed`和`BallGreen`基于`Ball`类, 如`BallBlue`。
-回到你的'ofApp.h'。包括新建的类, 并在你的'ofApp.cpp'文件中创建每个类的一个实例。初始化它们并调用他们的`update ()`和`draw ()`方法。一个快速的窍门！在调用`draw ()`方法之前, 调用：
-
+现在你可以试着创建两个新类： `BallRed` 和 `BallGreen` 基于 `Ball` 类, 如 `BallBlue`。
+回到你的 'ofApp.h'。包括新建的类, 并在你的 'ofApp.cpp' 文件中创建每个类的一个实例。初始化它们并调用他们的 `update ()` 和 `draw ()` 方法。一个快速的窍门！在调用 `draw ()` 方法之前, 调用：
 
 ```cpp
 ofEnableBlendMode(OF_BLENDMODE_ADD);
 ```
 
-This will make your application drawing methods have an additive blending mode. For more on this check the "Graphics" chapter.
-
-Hope you enjoyed this short tutorial!
-Have fun!
-
-这将使你的应用程序绘制方法具有添加混合模式。更多关于这个检查的“图形”一章。
+这会让你的应用程序绘制方法具有添加混合模式。关于这个, 可以看 “图形” 一章。
 
 希望你喜欢这个简短的教程！
+
 玩的开心！
 
