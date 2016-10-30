@@ -1,30 +1,25 @@
-# C++语言基础
+# C++ Language Basics
 
-*作者 [Josh Nimoy](http://jtnimoy.net)*
+*by [Josh Nimoy](http://jtnimoy.net)*
 
-> 未来的魔术师将会用数学方程式。
+> The magician of the future will use mathematical formulas.
 >
 > **--Aleister Crowley, 1911**
 
 ## Look Alive!
 
-> 未来的魔术师将会用数学方程式。
->
-> **--Aleister Crowley, 1911**
+This chapter introduces you to writing small computer programs using the C++ language. Although I assume very little about your previous knowledge, the literacy you gain from this chapter will directly influence your comprehension in subsequent chapters of the book, as most other topics stand on the shoulders of this one. Furthermore, the lessons herein are cumulative, meaning you can't skip one of the topics or you will get lost. If you get stuck on one of the concepts, please seek help in understanding specifically the part that did not make sense before moving on to the next topic. Following the lessons with this sort of rigor ensures that not only will you get the most out of openFrameworks, but computers in general.
 
-## Look Alive!
-
-此文章将介绍大家怎么使用C++语言写出一个电脑程序。也许你的知识可能不够多，不过你的读写能力将会随着这篇文章提高你的理解,因为它是众多作品的基础以及出发点。除此之外，这里的教程都会不断升级以及善用之前所学到的一点一滴，也就是所你不可以跳过任何一个教程主题，以免跟不上。万一你遇到任何困难或不明白，请在下一个教程之前寻求帮助。跟随这一系列精密的教学不止可以掌握openFrameworks的基础了解，它还让你了解基本的电脑操作。
 
 
 ## Iteration
 
 
-我在90年代里做了最多绘画以及粉刷性的艺术作品，一个高中AP艺术生，一头翩翩起舞的乌黑马尾，戴着一副圆框眼镜,穿着一系列使用Liquitex 基本丙烯酸颜料泼，甩，点缀，涂抹的独特衣着。由于我对经济课堂上太不感兴趣，我利用那段时间尝试了解了TI-82 图形计算器，然后意外的发现一些非比寻常的事情。不像我家里的小计算机，TI-82有一本很厚的使用手册，记载的都是一些三角函数以及看似很高端的科学，此时，我渴望探索的视线里发现了一个性感的黑色三角形在白色作为背景的情况下，发现了好多往上下不懂排列的三角型在里面，正如图1显示。
+I did most of my drawing and painting in the mid-nineties, a high school AP art student sporting a long black ponytail of hair shaved with a step, round eyeglasses, and never an article of clothing without spill, fling, smattering, or splotch of Liquitex Basics acrylic paint. Bored out of my mind in economics class, playing with my TI-82 graphing calculator, I discovered something that flipped a light bulb on in my heart. Unlike smaller calculators around my house growing up, the TI-82 had a thick instruction manual. Amidst sections in this manual about trigonometry functions and other dry out-of-reach science, something caught my thirsty, young eye: a sexy black-on-white pyramid with smaller upside-down pyramids infinitely nested inside, shown in Figure 1.
 
 ![Figure 1: TI-82 rendering of the Sierpinski triangle, Courtesy of Texas Instruments](images/sierpinski-fractal-ti82.png "Figure 1: TI-82 rendering of the Sierpinski triangle, Courtesy of Texas Instruments")
 
-这个分形是有名的 [谢尔宾斯基三角形](https://www.wolframalpha.com/input/?i=sierpinski+triangle), 基本上用了25个电脑指示来完成的谢尔宾斯程序. 我仔细的看了当中的代码，发现了几个numeric operations，个人觉得不会太难，大致上都是“do this”或者“if something then do another thing”的命令字眼。我照着书里的代码写进图形计算器，然后实行那个程序。刚开始LCD 潘饿了完全没显示任何东西。慢慢的，有几个像素开始随机转黑色。此时还太随机，看不到任何形状，不过再过多几秒，荧幕上逐渐地看到三角形的痕迹。再经过一段时间，我的计算机呈现了和书里一摸一样的图像。此时的我完全被这个结果惊呆了。怎么想也想不通，这是什么奇迹啊，采用了这么少指示就可以获取这么复杂的成果了吗？此荧幕有多于六千个像素，我只是用了仅仅25个指示就得到了这么赞的－作品。我可以从中参考以及改变成一个新作品吗？我从来没有想过这么神奇的结果背后尽然只有一点指示。的此时我找到了人生新的目的，我得了解这个程序，因为它在我的定义里已经是非常重要的一部分了。于是，我尝试改变了里面的一些数值再从新实行此程序。这时，荧幕上还是呈现白色背景，不过这次的图形截然不同了，而且这次的构图渐渐的往左边移动，一直到黑色像素完全离开荧幕里。这下我更大胆了，我直接把一个英语指示给换掉，然后这个程序出现错误，无法实行了。
+This fractal, the famous [Sierpinski triangle](https://www.wolframalpha.com/input/?i=sierpinski+triangle), accompanied about twenty-five computer instructions making up the full SIERPINS program. I looked closer at the code, seeing a few numeric operations – nothing too advanced, and most of it was commanding words, like "do this", or "if something then do another thing". I was able to key in the code from the book into the graphing calculator and run the program. At first, just a blank LCD panel. Slowly a few random pixels switched to black here and there, not really showing any pattern. After a few more seconds, the scene filled in and I could already see faint outlines of triangles. After a good long time, my calculator finally matched the picture in the book. My mind was officially blown. Certain things did not make sense. What sort of miracle of nature caused such a complex form to come from so little instruction? The screen had over six thousand pixels in it, so why is it that a mere twenty-five instructions was all it took to create this amazing, organism-like artwork? Whose artwork was it? Might I derive a new work from it? Rarely had I ever seen such a magical reward coming from so little work. I had found my new basics. I felt the need to understand the program because (I decided) it was important. I went back into the code and changed some of the numbers, then ran the program again. The screen went blank, then drew a different picture, only this time, skewed to the left, falling out of the viewport. Feeling more courageous, I attempted to change one of the English instructions, and the machine showed an error, failing to run.
 
 ![Figure 2: The human loop of a programmer.](images/programmer-cycle.png "Figure 2: The human loop of a programmer.")
 
@@ -582,7 +577,7 @@ The C++ language gets its name from being the C language plus one.
 
 ## Conclusion
 
-Congratulations on getting through the first few pages of this introduction to C++. With these basic concepts, you should be able to explore plenty far on your own, but I will admit that it is not enough to prepare you to comprehend the code examples in the rest of ofBook. Because of limited paper resources, what you've seen here is a "teaser" chapter for a necessarily lengthier introduction to the C++ language. That version of this chapter got so big that it is now its own book — available unabridged on the web, and possibly in the future as its own companion book alongside ofBook. Teaching the C++ language to non-programmers is indeed a large subject all itself, which could not be effectively condensed to 35 pages, let alone the 100+ page book it grew to be. If you're serious about getting into openFrameworks, I highly recommend you stop and read the unabridged version of this chapter before continuing in ofBook, so that you may understand what you are reading. You will find those materials at https://github.com/openframeworks/ofBook/blob/master/chapters/cplusplus_basics/unabridged.md
+Congratulations on getting through the first few pages of this introduction to C++. With these basic concepts, you should be able to explore plenty far on your own, but I will admit that it is not enough to prepare you to comprehend the code examples in the rest of ofBook. Because of limited paper resources, what you've seen here is a "teaser" chapter for a necessarily lengthier introduction to the C++ language. That version of this chapter got so big that it is now its own book — available unabridged on the web, and possibly in the future as its own companion book alongside ofBook. Teaching the C++ language to non-programmers is indeed a large subject all itself, which could not be effectively condensed to 35 pages, let alone the 100+ page book it grew to be. If you're serious about getting into openFrameworks, I highly recommend you stop and read the unabridged version of this chapter before continuing in ofBook, so that you may understand what you are reading. You will find those materials [here](https://github.com/openframeworks/ofBook/blob/master/chapters/cplusplus_basics/unabridged.md)
 
 ## PS.
 
