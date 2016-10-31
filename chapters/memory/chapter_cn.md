@@ -317,13 +317,9 @@ p2 = p1;
 vector<Particle> particles;
 ```
 
-in memory all the particles will be contiguous, among other things, that makes accessing them faster than if we had pointers to a different location in memory. It also makes it easier to translate c++ vectors to openGL memory structures but that's the topic for another chapter.
+在内存中, 所有的粒子将是连续的, 除此之外, 访问它们会比使用指向存储器中的不同位置的指针更快。它还使得将 c++ 向量转换为 openGL 内存结构更加简单, 但这是另一章的主题。
 
-在内存中, 所有的粒子将是连续的, 除了别的以外, 使得访问它们比如果我们具有指向存储器中的不同位置的指针更快。它还使得更容易将c ++向量转换为openGL内存结构, 但这是另一章的主题。
-
-Among other things we need to be aware of the fact that c++ copies things by default, when passing objects to functions as parameters. For example this:
-
-除此之外, 我们需要知道, 当将对象作为参数传递给函数时, c ++会默认复制对象。例如：
+除此之外, 我们需要知道, 当将对象作为参数传递给函数时, c++ 会默认地复制对象。例如：
 
 ```cpp
 void moveParticle(Particle p){
@@ -337,13 +333,9 @@ Particle p1;
 moveParticle(p1);
 ```
 
-Is perfectly valid code, but won't have any effect since the function will receive a copy of the particle and modify that copy instead of the original.
+这是完全有效的代码, 但不会有任何效果, 因为函数将接收一个粒子的副本, 并修改该副本, 而不是原来的。
 
-We can do this:
-
-是完全有效的代码, 但不会有任何效果, 因为函数将接收一个粒子的副本, 并修改该副本, 而不是原来的。
-
-我们做得到：
+我们可以这样做：
 
 ```cpp
 Particle moveParticle(Particle p){
@@ -357,9 +349,7 @@ Particle p1;
 p1 = moveParticle(p1);
 ```
 
-So we pass a copy of our particle to the function which modifies its values and returns a modified copy which we then copy into p1 again. See how many times we've mentioned copy in the previous sentence?  The compiler will optimize some of those out and for small objects it's perfectly okay to do that but imagine we had something like this:
-
-因此, 我们将一个粒子的副本传递给函数, 函数修改它的值并返回一个修改的副本, 然后我们再次将其复制到p1中。看到我们在上一句中提到过多少次复制？编译器会优化其中的一些, 对于小对象, 它是完全可以这样做, 但想象我们有这样的东西：
+因此, 我们将一个粒子的副本传递给函数, 函数修改它的值并返回一个修改的副本, 然后我们再次将其复制到 p1 中。看到我们在上一句中提到过多少次复制了吗？编译器会优化其中的一些, 对于小对象, 这是完全可行的, 但想象我们如果有这样的东西：
 
 ```cpp
 vector<Particle> moveParticles(vector<Particle> ps){
@@ -376,13 +366,9 @@ vector<Particle> ps;
 ps = moveParticles(ps);
 ```
 
-If we have 1 million particles that will be awfully slow, memory is really slow compared to the cpu, so anything that involves copying memory or allocating new memory should be usually avoided. So what can we do to avoid all that copies?
+如果我们有100万个粒子将会非常慢, 与 cpu 相比, 内存真的很慢, 所以通常应该避免任何涉及复制内存或分配新内存的内容。那么, 我们可以做什么来避免所有副本呢？
 
-如果我们有100万个粒子将会非常慢, 与cpu相比, 内存真的很慢, 所以通常应该避免涉及复制内存或分配新内存的任何内容。那么, 我们可以做什么来避免所有副本？
-
-Well we could use pointers right?
-
-那么我们可以使用指针吗？
+那么我们可以使用指针对吧？
 
 ```cpp
 void moveParticle(Particle * p){
@@ -395,27 +381,21 @@ Particle p1;
 moveParticle(&p1);
 ```
 
-Now, here's something new, notice how to refer to the variables of a pointer to an object instead of using the dot, we use the `->` operator, everytime we want to access a variable in a pointer to an object instead of having to dereference it like:
-
-现在, 这里有一些新的东西, 注意如何引用指向一个对象的指针的变量, 而不是使用点, 我们使用` - >`操作符, 每次我们想要访问一个指向一个对象的指针, 而不是取消引用它：
+现在有一些新的东西, 注意如何引用指向一个对象的指针的变量, 而不是使用点, 我们使用 `->` 操作符, 我们要访问一个指向对象的指针, 而不是取消引用它：
 
 ```cpp
 (*p).x +=10;
 ```
 
-we can use the `->`
+我们可以用 `->`
 
 ```cpp
 p->x += 10;
 ```
 
-So that solves our problem, using a pointer instead of passing a copy of the object, we are passing a reference to it, its memory address, so the function will actually modify the original.
+所以我们的问题解决了, 使用指针, 而不是传递对象的副本, 我们传递一个引用, 它的内存地址, 所以函数将实际地修改初始值。
 
-The main problem with this is that the syntax is kind of weird, imagine how would look like if we passed a pointer for the second example, the one with the vector:
-
-所以, 解决我们的问题, 使用指针, 而不是传递对象的副本, 我们传递一个引用, 它的内存地址, 所以函数将实际修改的原始。
-
-这个的主要问题是语法是奇怪的, 想象如果我们传递一个指针为第二个例子, 一个具有向量的样子：
+这个方法的主要问题是语法很奇怪, 想象如果我们为第二个例子传递一个指针, 一个具有向量的样子：
 
 ```cpp
 vector<Particle> moveParticles(vector<Particle> ps){
@@ -432,27 +412,21 @@ vector<Particle> ps;
 ps = moveParticles(ps);
 ```
 
-Now, the function will look like:
+现在函数看起来会是这样：
 
 ```cpp
 void moveParticles(vector<Particle> * ps){
 ```
 
-the problem is that now we can't use the [] operator to access the elements in the vector cause ps is not a vector anymore but a pointer to a vector. What's more this
-
-问题是现在我们不能使用[]运算符来访问向量中的元素, 因为ps不是向量, 而是向量的指针。更重要的是
+问题是现在我们不能使用 [] 运算符来访问向量中的元素, 因为 ps 不是向量, 而是向量的指针。更重要的是
 
 ```cpp
 ps[i].x += 10;
 ```
 
-would actually compile but would mostly sure give as a memory access error, a segmentation fault. ps is now a pointer and when using pointers the `[]' behaves like if we had an array of vectors!
+将实际编译, 但绝大多数肯定会报错, 内存访问错误或分段错误。 ps 现在是一个指针, 当使用指针时, `[]` 的行为就好像我们有一个向量数组！
 
-We'll explain this in more depth in the section about memory structures, but let's see how to pass a reference that doesn't have pointer syntax. In c++ is called a reference and it looks like:
-
-将实际编译, 但绝大多数肯定会给出作为内存访问错误, 分段错误。 ps现在是一个指针, 当使用指针时, `[]'的行为就好像我们有一个向量数组！
-
-我们将在关于内存结构的部分中更深入地解释这一点, 但让我们看看如何传递一个没有指针语法的引用。在c ++中被称为引用, 它看起来像：
+我们将在关于内存结构的部分中更深入地解释这一点, 但让我们看看如何传递一个没有指针语法的引用。在 c++ 中被称为引用, 它看起来像：
 
 ```cpp
 void moveParticles(vector<Particle> & ps){
@@ -467,15 +441,10 @@ vector<Particle> ps;
 moveParticles(ps);
 ```
 
-Now we are passing a reference to the original object but instead of having to use pointer syntax we can still use it as if it was a normal object.
-
 现在我们传递一个对原始对象的引用, 而不是必须使用指针语法, 我们仍然可以使用它, 就像它是一个普通的对象。
 
->高级注意：有时候我们想使用引用来避免副本, 但仍然要确保我们传递对象的函数不会修改其内容, 在这种情况下, 建议使用const类似：
+>高级注意：有时候我们想使用引用来避免副本, 但仍然要确保我们传递对象的函数不会修改其内容, 在这种情况下, 建议这样使用 const：
 
-> Advanced note: Some times we want to use references to avoid copies but still be sure that the function we pass our object to, won't modify its contents, in that case it's recommendable to use const like:
-
->
     ofVec2f averagePosition(const vector<Particle> & ps){
         ofVec2f average;
         for(int i=0;i<ps.size();i++){
@@ -488,42 +457,26 @@ Now we are passing a reference to the original object but instead of having to u
     ofVec2f averagePos = averagePosition(ps);
 
 
-> const only makes it imposible to modify the variable, even if it's a reference, and tells anyone using that function that they can pass their data into it and it won't be changed, also anyone modifying that function knows that in the future it should stay the same and the input, the particle system shouldn't be modified.
-
-> const只是使得它不可能修改变量, 即使它是一个引用, 并告诉任何人使用该函数, 他们可以传递他们的数据到它, 它不会被改变, 任何人修改该函数知道, 在未来应该保持不变和输入, 粒子系统不应该修改。
-
-Outside of parameters, references have a couple of special characteristics.
-
-First we can't modify the content of a reference once it's created, for example we can do:
+> const 只是使得它不可能修改变量, 即使它是一个引用, 并告诉任何人使用该函数, 他们可以传递他们的数据, 但它不会被改变, 任何修改该函数的人都知道, 应该保持不变和输入, 粒子系统不应该被修改。
 
 在参数之外, 引用有一些特殊的特性。
 
-首先, 我们不能修改引用的内容, 一旦它被创建, 例如我们可以做：
+首先, 一旦引用被创建, 就不能修改引用的内容, 例如我们这样写：
 
 ```cpp
 ofVec2f & pos = p.pos;
 pos.x = 5;
 ```
-
-but trying to change the reference itself like in:
 
 但是试图改变引用本身, 如：
 
 ```cpp
 ofVec2f & pos = p.pos;
 pos.x = 5;
-pos = p2.pos;  // error, a reference can only be assigned on its declaration
+pos = p2.pos;  // 错误, 引用只能在其声明上分配
 ```
 
-```cpp
-ofVec2f＆pos = p.pos;
-pos.x = 5;
-pos = p2.pos; //错误, 引用只能在其声明上分配
-```
-
-Also you can return a reference but depending on what that reference it's pointing to it can be a bad idea:
-
-也可以返回一个引用, 但根据引用它指向它可能是一个坏主意：
+也可以返回一个引用, 但根据引用指向它可能是一个坏主意：
 
 ```cpp
 ofVec2f & averagePosition(const vector<Particle> & ps){
@@ -536,36 +489,23 @@ ofVec2f & averagePosition(const vector<Particle> & ps){
 }
 ```
 
-Will actually compile but will probably result in a segmentation fault at some point or even just work but we'll get weird values when calling this function. The problem is that we are creating the variable `average` in the stack so when the function returns it'll be *deleted* from memory, the reference we return will be pointing to a memory area that is not reserved anymore for average and as soon as it gets overwritten we'll get invalid values or a pointer to a memory area that doesn't belong to our program anymore.
+这将会实际编译, 但可能会导致一个分段错误在某些时候, 甚至只是工作, 当调用此函数时我们可能会得到奇怪的值。问题是, 我们在栈中创建变量 `平均值` / `average`, 所以当函数返回时, 它将从内存中*删除* / *deleted*, 我们返回的引用将指向一个不再保留的内存区域, 很快, 当它被覆盖, 我们将获得无效的值或指向不属于我们的程序的内存区域的指针。
 
-将实际编译, 但可能会导致一个分段错误在某些时候, 甚至只是工作, 但我们会得到奇怪的值, 当调用此函数。问题是, 我们在堆栈中创建变量“平均值”, 所以当函数返回时, 它将从内存中删除*, 我们返回的引用将指向一个不再保留的内存区域, 很快, 当它被覆盖, 我们将获得无效的值或指向不属于我们的程序的内存区域的指针。
+这是 c++ 中最恼人的问题之一, 它被称为 dangling 指针或引用, 它是由我们有一个指针或引用指向一个内存区域, 但是后来释放的某种方式引起的。
 
-This is one of the most annoying problems in c++ it's called dangling pointers or in this case references and it's caused when we have a pointer or a reference that points to a memory area that is later freed somehow.
+许多的现代编程语言解决这个问题依靠不同的策略, 例如 Java 就不会让这种情况发生, 因为对象一旦超出他们所在范围的最后一个引用就会被删除, 它使用的东西称为垃圾收集器, 不时通过遍历内存寻找无用的对象, 并删除它们。这解决了问题, 但使得很难知道哪些对象将被真正删除。 c++ 在其最新版本中, 还有其他的一些现代语言尝试使用定义对象所有权的新型的指针来解决这个问题, 我们将在本章的最后一节讨论智能指针。
 
-这是c ++中最恼人的问题之一, 它被称为dangling指针或在这种情况下, 引用, 它是由我们有一个指针或引用指向一个内存区域, 后来释放的某种方式引起的。
+## 堆中的变量
 
-More modern langauges solve this with diferent strategies, for example Java won't let this happen since objects are only deleted once the last reference to them goes out of scope, it uses something called a garbage collector that from time to time goes through the memory looking for objects which have no more references pointing to them, and deletes them. This solves the problem but makes it hard to know when objects are going to get really deleted. c++ in its latest versions, and more modern languages try to solve this using new kinds of pointers that define ownership of the object, we'll talk about it in the latest section of this chapter, smart pointers.
-
-更多的现代langauges解决这个不同的策略, 例如Java不会让这种情况发生, 因为对象只有删除一旦他们超出范围的最后一个引用, 它使用的东西称为垃圾收集器, 不时通过内存寻找没有更多引用指向它们的对象, 并删除它们。这解决了问题, 但使得很难知道对象将被真正删除。 c ++在其最新版本中, 更多的现代语言尝试使用定义对象所有权的新类型的指针来解决这个问题, 我们将在本章的最后一节讨论智能指针。
-
-## Variables in the heap ##
-##堆中的变量##
-
-Now that we know the syntax and semantics of pointers lets see how to use the heap. The heap is an area of memory common to all of our application, any function can create variables in this space and share it with others, to use it we need a new keyword `new`:
-
-现在我们知道指针的语法和语义让我们看看如何使用堆。堆是所有应用程序共同的内存区域, 任何函数都可以在这个空间创建变量并与其他人共享, 为了使用它, 我们需要一个新的关键字`new`：
+现在我们知道指针的语法和语义让我们看看如何使用堆。堆是所有应用程序共同的内存区域, 任何函数都可以在这个空间创建变量并与其他人共享, 为了使用它, 我们需要一个新的关键字 `new`：
 
 ```cpp
 Particle * p1 = new Particle;
 ```
 
-If you know processing or Java that looks a little bit like it, right? indeed this is exactly the same as a Java object: when we use `new` we are creating that variable in the heap instead of the stack. `new` returns  a pointer to a memory address in the heap and in c++ we explictly need to specify that the variable `p1` where we are going to store it, is a pointer by using the `*` in the declaration.
+如果你知道 Processing 或 Java 的话, 这看起来有点像它, 对吧？实际上, 这与Java对象完全相同：当我们使用 `new` 时, 我们在堆中创建该变量而不是栈。 `new` 返回指向堆中内存地址的指针, 在 c++ 中, 我们需要指定变量 `p1` 在哪里存储, 就要使用声明中的 `*` 指针。
 
-如果你知道处理或Java看起来有点像它, 对吧？实际上, 这与Java对象完全相同：当我们使用`new`时, 我们在堆中创建该变量而不是堆栈。 `new`返回指向堆中内存地址的指针, 在c ++中, 我们需要指定变量`p1`在哪里存储它, 是一个使用声明中的`*`指针。
-
-To access the variables or functions of a pointer to an object, as we've seen before, we use the `->` operator so we would do:
-
-要访问指向对象的指针的变量或函数, 如我们之前所见, 我们使用` - >`运算符, 因此我们可以这样做：
+要访问指向对象的指针的变量或函数, 如我们之前所见, 我们使用 `->` 运算符, 因此我们可以这样做：
 
 ```cpp
 Particle * p1 = new Particle;
@@ -579,23 +519,14 @@ Particle * p1 = new Particle;
 p1->setup();
 ```
 
-A pointer as any variable can be declared without initializing it yet:
-
 任何变量的指针都可以声明, 而不需要初始化它：
 
 ```cpp
 Particle * p1;
-p1->setup() // this will compile but fail when executing the application
+p1->setup() // 这将会编译, 但在执行应用程序时会失败
 ```
 
-```cpp
-粒子* p1;
-p1-> setup ()//这将会编译, 但在执行应用程序时失败
-```
-
-We can imagine the heap as some kind of global memory as opposed to the stack being local memory. In the stack only the block that owned it could access it while things created in the heap outlive the scope in which they were created and any function can access them as long as they have a reference (a pointer) to them. For example:
-
-我们可以想象堆作为某种全局内存, 而不是栈是本地内存。在堆栈中, 只有拥有它的块可以访问它, 而在堆中创建的东西比创建它们的范围更大, 任何函数都可以访问它们, 只要他们有一个引用 (指针)。例如：
+我们可以想象堆作为某种全局内存, 而不像栈是本地内存。在堆栈中, 只有拥有它的区块才可以访问它, 而在堆中创建的东西比创建它们的范围更大, 任何函数都可以访问它们, 只要他们有一个引用 (指针)。例如：
 
 ```cpp
 Particle * createParticle(){
@@ -612,13 +543,9 @@ Particle * p = createParticle();
 modifyParticle(p);
 ```
 
-`createParticle` is creating a new `Particle` in the heap, so even when createParticle finishes that `Particle` still exists. We can use it outside the function, pass a reference to it to other functions...
+`createParticle` 在堆中创建一个新的 `Particle`, 所以即使 createParticle 完成了, `Particle` 仍然存在。我们可以在函数外部使用它, 将引用传递给其他函数...
 
-`createParticle`在堆中创建一个新的`Particle`, 所以即使createParticle完成`Particle`仍然存在。我们可以在函数外部使用它, 将引用传递给其他函数...
-
-So how can we say that we don't want to use that variable anymore? we use the keyword `delete`:
-
-那么我们怎么能说我们不想再使用那个变量呢？我们使用关键字`delete`：
+那么我们怎么能说我们不想再使用那个变量呢？我们使用关键字 `delete`：
 
 ```cpp
 Particle * p1 = new Particle;
@@ -627,9 +554,7 @@ p1->setup();
 delete p1;
 ```
 
-This is important when using the heap, if we fail to do this we'll get with what is called a memory leak, memory that is not referenced by anyone but continues to leave in the heap, making our application use more and more memory over time till it fills all the available memory in our computer:
-
-这在使用堆时很重要, 如果我们不这样做, 我们将得到所谓的内存泄漏, 任何人都不会引用的内存, 但仍然在堆中, 使我们的应用程序使用越来越多的内存时间, 直到它填充我们的计算机中的所有可用内存：
+这在使用堆时很重要, 如果我们不这样做, 我们将会得到所谓的内存泄漏, 任何人都不会引用的内存, 却仍然在堆中, 当我们的应用程序使用越来越多的内存时, 直到它填充慢我们的计算机中的所有可用内存：
 
 ```cpp
 void ofApp::draw(){
@@ -639,13 +564,9 @@ void ofApp::draw(){
 }
 ```
 
-every time we call `draw`, it'll create a new particle, once each `draw` call finishes we loose the reference *p1 to it but the memory we allocated using new is not freed when the function call ends so our program will slowly use more and more memory, you can check it using the system monitor.
+每次我们调用 `draw`时, 它都会创建一个新的粒子, 每当 `draw` 调用完成后, 我们就丢掉了引用 *p1, 但是当函数调用结束时, 我们使用 new 分配的内存不会被释放, 所以我们的程序会慢慢使用越来越多的内存, 可以使用系统监视器检查它。
 
-每次我们调用`draw`, 它都会创建一个新的粒子, 每当`draw`调用完成后, 我们就丢掉了引用* p1, 但是当函数调用结束时, 我们使用new分配的内存不会被释放, 所以我们的程序会慢慢使用越来越多的内存, 可以使用系统监视器检查它。
-
-As we've mentioned before the stack memory is limited so sometimes we need to use the heap, trying to create 1 million particles in the stack will probably cause a stack overflow. In general, though, most of the time in c++ we don't need to use the heap, at least not directly, classes like vector, ofPixels and other memory structures allow us to use heap memory but still have stack semantics, for example this:
-
-正如我们前面提到的, 堆栈内存有限, 所以有时我们需要使用堆, 试图在堆栈中创建100万个粒子可能会导致堆栈溢出。一般来说, 虽然大多数时候在c ++中我们不需要使用堆, 至少不是直接, 类像vector, ofPixels和其他内存结构允许我们使用堆内存但仍然有堆栈语义, 例如这个：
+正如我们前面提到的, 堆栈内存有限, 所以有时我们需要使用堆, 试图在栈中创建100万个粒子可能会导致堆栈溢出。一般来说, 虽然大多数时候在 c++ 中我们不需要使用堆, 至少不是直接, 像vector 类, ofPixels 和其他内存结构允许我们使用堆内存但仍然有堆栈语义, 例如这个：
 
 ```cpp
 void ofApp::draw(){
@@ -658,12 +579,9 @@ void ofApp::draw(){
 }
 ```
 
-is actually using heap memory since the vector is internally using that, but the vector destructor will take care of freeing that memory for us as soon as the particles variable goes out of scope, when the current call to draw finishes.
-
 实际上是使用堆内存, 因为向量在内部使用它, 但是当当前调用绘制完成时, 向量析构函数会在粒子变量超出范围时立即释放该内存。
 
-## Memory structures, arrays and vectors ##
-##内存结构, 数组和向量##
+## 内存结构, 数组和向量
 
 Arrays are the most simple way in c++ to create collections of objects, as any other type in c++ they can also be created in the stack or in the heap. Arrays in the stack have a limitation though, they need to have a predifined size that needs to be specified in its declaration and can't change afterwards:
 
@@ -1143,4 +1061,3 @@ void ofApp::setup(){
 Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it, whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference cound arrives to 0 it frees the allocated memory. That reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get wrong if we pass a shared_ptr accross different threads.
 
 是完全确定。 shared_ptr的工作方式是通过保持对它有多少引用的计数, 每当我们复制一个副本时, 它将该计数器增加一个, 每当一个引用被销毁时, 它减少一个引用。当参考库到达0时, 释放分配的内存。该引用计数是原子性地完成的, 这意味着我们可以在线程之间共享shared_ptr, 而不会出现计数问题。这并不意味着我们可以在多线程应用程序中安全地访问包含的数据, 只要引用计数不会错误, 如果我们通过一个shared_ptr跨不同线程。
-
