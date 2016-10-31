@@ -788,20 +788,11 @@ if(objectsMap.find("object1")!=objectsMap.end()){
 
 ## 智能指针
 
-As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once vañlid but now point to an invalid memory location, trying to dereference a NULL pointer, posible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
+正如我们前面所说的, 传统的 c 指针也称为现在的 *raw pointers* 有时是有问题的, 最常见的问题是悬空指针：指针可能曾经是有效的但现在指向一个无效的内存位置, 试图取消引用一个 NULL 指针, 如果我们在释放对该内存地址的引用之前无法释放内存, 则会导致可能的内存泄漏...
 
-正如我们前面所说的, 传统的c指针也称为现在的* raw指针*有时是有问题的, 最常见的问题是悬空指针：指针可能曾经是vañlid但现在指向一个无效的内存位置, 试图取消引用一个NULL指针, 如果我们在释放对该内存地址的引用之前无法释放内存, 则会导致可能的内存泄漏...
+智能指针试图通过将我们一直称为堆栈语义的内容添加到内存分配中来解决这个问题, 正确的术语是 RAII：[Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization)。这意味着在堆栈中创建一个对象, 分配它稍后将使用的资源。当它的析构函数被调用, 因为变量超出范围, 对象的析构函数被触发, 它负责释放所有使用的资源。对于 RAII 还有更多的特性, 但对于这一章,  RAII 对我们更加重要的。
 
-Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation, the correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization) And means that the creation of an object in the stack, allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all the used resources. There's some more implications to RAII but for this chapter this is what matters to us more.
-
-
-智能指针试图通过将我们一直称为堆栈语义的内容添加到内存分配中来解决这个问题, 正确的术语是RAII：[Resource Acquisition Is Initialization] (http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization)和意味着在堆栈中创建一个对象, 分配它稍后将使用的资源。当它的析构函数被调用, 因为变量超出范围, 对象的析构函数被触发, 它负责释放所有使用的资源。对RAII有更多的影响, 但对于这一章, 这是对我们更重要的。
-
-Smart pointers use this technique to avoid all the problems that we've seen in raw pointers. They do this by also defining better who is the owner of some allocated memory or object. Till now we've seen how things allocated in the stack belong to the function or block that creates them we can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
-
-智能指针使用这种技术来避免我们在原始指针中遇到的所有问题。他们这样做也通过定义更好的谁是一些分配的内存或对象的所有者。到目前为止, 我们已经看到了堆栈中分配的内容属于创建它们的函数或块, 我们可以返回它们的副本 (或在c ++ 11或更高版本中, 移动它们)作为返回值的函数, 但是他们的所有权始终清晰。
-
-With heap memory though, ownership becomes way more fuzzy, someone might create a variable in the heap like:
+智能指针使用这种技术来避免我们在原始指针中遇到的所有问题。他们也通过定义谁是更好的分配内存或对象的所有者。到目前为止, 我们已经看到了堆栈中分配的内容属于创建它们的函数或区块, 我们可以返回它们的副本 (或在 c++ 11 或更高版本中, 移动它们) 作为返回值的函数, 但是他们的所有权始终清晰。
 
 使用堆内存, 所有权变得更模糊, 有人可能在堆中创建一个变量, 如：
 
@@ -813,9 +804,7 @@ int * createFive(){
 }
 ```
 
-Now, when someone calls that function, who is the owner of the `new int`? Things can get even more complicated, what if we pass a pointer to that memory to another function or even an object?
-
-现在, 当有人调用该函数时, 谁是`new int`的所有者？事情可以变得更复杂, 如果我们将一个指针传递给另一个函数甚至一个对象的内存呢？
+现在, 当有人调用该函数时, 谁是 `new int` 的所有者？事情可以就变得更复杂了, 如果我们将指针传递给另一个函数甚至一个对象的内存呢？
 
 ```cpp
 // ofApp.h
@@ -829,9 +818,7 @@ void ofApp::setup(){
 }
 ```
 
-who is now the owner of that memory? ofApp? object? The ownership defines among other things who is responsible for deleting that memory when it's not used anymore, now both ofApp and object have a reference to it, if ofApp deletes it before object is done with it, object might try to access it and crash the application, or the other way around. In this case it seems logical that ofApp takes care of deleting it since it knows about both object and the pointer to int a, but what if we change the example to :
-
-谁现在是那个记忆的所有者？ ofApp？目的？所有权定义除其他事情之外谁负责删除该内存, 当它不再使用时, 现在的应用程序和对象都有它的引用, 如果ofApp在对象完成之前删除它, 对象可能会尝试访问它, 并崩溃应用程序, 或者其他方式。在这种情况下, 似乎onApp负责删除它, 因为它知道对象和指向int a的指针, 但如果我们更改示例如果, 
+谁现在是那个记忆的所有者？ ofApp？ object？所有权定义除其他事情之外, 谁负责删除该内存, 当它不再使用时, 现在的应用程序和对象都有它的引用, 如果 ofApp 在对象完成之前删除它, 对象可能会尝试访问它, 并崩溃应用程序, 或者其他方式。在这种情况下, 似乎 ofApp 负责删除它, 因为它知道对象和指向 int a 的指针, 但如果我们更改示例: 
 
 ```cpp
 // ofApp.h
@@ -846,8 +833,6 @@ void ofApp::setup(){
 
 or even:
 
-
-
 ```cpp
 // ofApp.h
 SomeObject object;
@@ -858,28 +843,17 @@ void ofApp::setup(){
 }
 ```
 
-
-now ofApp doesn't know anymore about the allocated memory but both cases are possible so we actually need to know details of the implementation of object to know if we need to keep a reference of that variable to destroy it later or not. That, among other things breaks encapsulation, that you might now from chapter 1. We shouldn't need to know how object works internally to be able to use it. This makes the logic of our code really complicated and error prone.
-
-现在ofApp不再了解已分配的内存, 但是这两种情况都是可能的, 所以我们实际上需要知道对象的实现细节, 知道我们是否需要保存该变量的引用以便以后销毁它。这包括封装, 你现在可能从第1章。我们不应该需要知道对象如何在内部工作, 以便能够使用它。这使得我们的代码的逻辑真的很复杂, 容易出错。
-
-Smart pointers solve this by clearly defining who owns and object and by automatically deleting the allocated memory when the owner is destroyed. Sometimes, we need to share an object among several owners. For that cases we have a special type of smart pointers called shared pointers that defined a shader ownership and free the allocated memory only when all the owners cease to use the variable.
+现在 ofApp 不再了解已分配的内存, 但是这两种情况都是可能的, 所以我们实际上需要知道对象的实现细节, 知道我们是否需要保存该变量的引用以便以后销毁它。这包括封装, 你现在可能从第1章了解到的。我们不应该需要知道对象如何在内部工作, 以便能够使用它。这使得我们的代码的逻辑真的很复杂, 容易出错。
 
 智能指针通过清楚地定义谁拥有和对象并且通过在所有者被销毁时自动删除分配的存储器来解决这个问题。有时, 我们需要在几个所有者之间共享一个对象。对于这种情况, 我们有一种特殊类型的智能指针, 称为共享指针, 它定义着色器所有权, 并在所有的所有者停止使用变量时释放分配的内存。
 
-We are only going to see this briefly, there's lots of examples in the web about how to use smart pointers and reference to their syntax, the most important is to understand how they work by defining the ownership clearly compared to raw pointers and the problems they solve.
-
-我们只是简单地看到这一点, 网上有很多关于如何使用智能指针和引用其语法的例子, 最重要的是通过定义所有权明确地相比原始指针和他们的问题他们的工作原理解决。
+我们只是简单地看到这一点, 网上有很多关于如何使用智能指针和引用其语法的例子, 最重要的是通过定义所有权明确地相比原始指针和他们的问题以及他们的工作原理解决。
 
 ### unique_ptr
 
-A unique_ptr, as it's name suggests, is a pointer that defines a unique ownership for an object, we can move it around and the object or function that has it at some point is the owner of it, no more than one reference at the same time is valid and when it goes out of scope it automatically deletes any memory that we might have allocated.
+一个 unique_ptr, 就像它的名字所暗示的, 是一个指针, 定义一个对象的唯一所有权, 我们可以移动它, 它的对象或函数在某一点是它的所有者, 在同一个不超过一个引用时间是有效的, 当它超出范围它自动删除我们可能已分配的任何内存。
 
-一个unique_ptr, 就像它的名字所暗示的, 是一个指针, 定义一个对象的唯一所有权, 我们可以移动它, 它的对象或函数在某一点是它的所有者, 在同一个不超过一个引用时间是有效的, 当它超出范围它自动删除我们可能已分配的任何内存。
-
-To allocate memory using a unique_ptr we do:
-
-要使用unique_ptr分配内存, 我们执行：
+要使用 unique_ptr 分配内存, 我们执行：
 
 ```cpp
 void ofApp::setup(){
@@ -888,9 +862,7 @@ void ofApp::setup(){
 }
 ```
 
-As you can see, once it's created it's syntax is the same as a raw pointer, we can use the `*` operator to dereference it and access or modiify it's value, if we are working with objects like:
-
-正如你所看到的, 一旦创建它的语法与原始指针相同, 我们可以使用`*`操作符解除引用, 访问或修改它的值, 如果我们使用下面的对象：
+正如你所看到的, 一旦创建它的语法与原始指针相同, 我们可以使用 `*` 操作符解除引用, 访问或修改它的值, 如果我们使用下面的对象：
 
 ```cpp
 void ofApp::setup(){
@@ -899,17 +871,11 @@ void ofApp::setup(){
 }
 ```
 
-We can also use the `->` to access it's member variables and functions.
+我们也可以使用 `->` 来访问它的成员变量和函数。
 
-我们也可以使用` - >`来访问它的成员变量和函数。
+当unique_ptr 一个对象函数超出范围, 它的析构函数将被调用, 内部将在分配的内存上调用 `delete`, 所以我们不需要在 unique_ptr 上调用 delete。
 
-When the function goes out of scope, being unique_ptr an object, it's destructor will get called, which internally will call `delete` on the allocated memory so we don't need to call delete on unique_ptr at all.
-
-当函数超出范围, 是unique_ptr一个对象, 它的析构函数将被调用, 内部将在分配的内存上调用'delete', 所以我们不需要在unique_ptr上调用delete。
-
-Now let's say we want to move a unique_ptr into a vector:
-
-现在, 让我们假设我们将一个unique_ptr移动到一个向量：
+现在, 让我们假设我们将一个 unique_ptr 移动到一个向量：
 
 ```cpp
 void ofApp::setup(){
@@ -923,7 +889,7 @@ void ofApp::setup(){
 
 That will generate a long error, depending on the compiler, really hard to understand. What's going on, is that `a` is still owned by ofApp::setup so we can't put it in the vector, what we can do is move it into the vector by explicitly saying that we want to move the ownership of that unique_ptr into the vector:
 
-这将产生一个很长的错误, 这取决于编译器, 真的很难理解。发生了什么, 是'a'仍然由ofApp :: setup所有, 所以我们不能把它放在向量中, 我们可以做的是将它移动到向量中, 明确地说, 我们想移动的所有权unique_ptr into the vector：
+这将产生一个很长的错误, 这取决于编译器, 真的很难理解。这里面发生了什么, 主要是 `a` 仍然由 ofApp::setup 所有, 所以我们不能把它放在向量中, 我们可以做的是将它移动到向量中, 明确地说, 我们想把 unique_ptr 的所有权移动给vector：
 
 ```cpp
 void ofApp::setup(){
@@ -935,9 +901,7 @@ void ofApp::setup(){
 }
 ```
 
-There's a problem that unique_ptr doesn't solve, we can still do:
-
-有一个问题unique_ptr不解决, 我们仍然可以做：
+有一个问题 unique_ptr 解决不了, 但我们仍然可以这样做：
 
 ```cpp
 void ofApp::setup(){
@@ -951,15 +915,11 @@ void ofApp::setup(){
 }
 ```
 
-The compiler won't fail there but if we try to execute the application it'll crash since `a` is not owned by ofApp::setup anymore, having to explicitly use `move` tries to solve that problem by making the syntax clearer. After using move, we can't use that variable anymore except through the vector. More modern langauages like [Rust](http://www.rust-lang.org/) completely solve this by making the compiler detect this kind of uses of moved variables and producing a compiler error. This will probably be solved at some point in c++ but by now you need to be careful to not use a moved variable.
-
-编译器不会失败, 但是如果我们尝试执行应用程序, 它会崩溃, 因为`a`不是由ofApp ::设置不再拥有, 不得不明确使用`move`尝试解决这个问题, 通过使语法更清楚。使用move后, 我们不能再使用该变量, 除非通过向量。更现代的langauages像[Rust] (http://www.rust-lang.org/)通过使编译器检测这种移动变量的使用和产生编译器错误完全解决这个问题。这可能会在c ++的某个点解决, 但现在你需要小心不要使用移动的变量。
+编译器不会失败, 但是如果我们尝试执行应用程序, 它会崩溃, 因为 `a` 不再是 ofApp::setup 拥有的了, 不得不明确使用 `move` 尝试解决这个问题, 让语法更清楚一些。使用 move 后, 我们不能再使用该变量, 除非通过向量。更现代的编程语言像[Rust](http://www.rust-lang.org/) 通过使编译器检测这种移动变量的使用和编译器产生的错误完全解决了这个问题。这可能会可以解决 c++ 的某些点, 但现在你需要小心不要使用移动的变量。
 
 ### shared_ptr
 
-As we've seen before, sometimes having unique ownership is not enough, sometimes we need to share an object among several owners, in c++11 or later, this is solved through `shared_ptr`. The usage is pretty similar to `unique_ptr`, we create it like:
-
-如前所述, 有时拥有唯一所有权是不够的, 有时我们需要在几个所有者之间共享一个对象, 在c ++ 11或更高版本中, 这是通过`shared_ptr`解决的。其用法非常类似于`unique_ptr`, 我们创建它：
+如前所述, 有时拥有唯一所有权是不够的, 有时我们需要在几个所有者之间共享一个对象, 在 c++ 11或更高版本中, 这是通过 `shared_ptr` 可以解决的。其用法非常类似于 `unique_ptr`, 我们创建它：
 
 ```cpp
 void ofApp::setup(){
@@ -971,9 +931,7 @@ void ofApp::setup(){
 }
 ```
 
-The difference is that now, both the vector and ofApp::setup, have a reference to that object, and doing:
-
-区别是现在, 向量和ofApp :: setup都有对该对象的引用, 并做：
+区别是现在, 向量和 ofApp::setup 都有对该对象的引用, 并且：
 
 ```cpp
 void ofApp::setup(){
@@ -987,7 +945,5 @@ void ofApp::setup(){
 }
 ```
 
-Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it, whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference cound arrives to 0 it frees the allocated memory. That reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get wrong if we pass a shared_ptr accross different threads.
-
-是完全确定。 shared_ptr的工作方式是通过保持对它有多少引用的计数, 每当我们复制一个副本时, 它将该计数器增加一个, 每当一个引用被销毁时, 它减少一个引用。当参考库到达0时, 释放分配的内存。该引用计数是原子性地完成的, 这意味着我们可以在线程之间共享shared_ptr, 而不会出现计数问题。这并不意味着我们可以在多线程应用程序中安全地访问包含的数据, 只要引用计数不会错误, 如果我们通过一个shared_ptr跨不同线程。
+这是完全可行的。 shared_ptr 的工作方式是通过保持对它有多少引用的计数, 每当我们复制一个副本时, 它将该计数器增加一个, 每当一个引用被销毁时, 它减少一个引用。当参考库到达0时, 释放分配的内存。该引用计数的原理是原子性地, 这意味着我们可以在线程之间共享 shared_ptr, 而不会出现计数问题。这并不意味着我们可以在多线程应用程序中安全地访问包含的数据, 如果我们通过一个 shared_ptr 跨不同线程的话, 这只意味着引用计数不会错误。
 
