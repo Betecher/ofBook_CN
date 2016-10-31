@@ -111,17 +111,11 @@ void ofApp::setup(){
 }
 ```
 
-which is not very common but is used sometimes to define the life of a variable inside a function, mostly when that variable is an object that holds resources and we want to only hold them for a specific duration.
-
 这不是很常见, 但有时用于定义函数内部变量的寿命, 主要是当该变量是持有资源的对象, 并且我们只想保持它们一个特定的持续时间。
 
-The life of a variable is called `scope`.
+变量的生命周期称为 `scope`。
 
-Apart from creating variables inside functions we can also create variables in the class declaration in our .h like:
-
-变量的生命周期称为“范围”。
-
-除了在函数中创建变量外, 我们还可以在.h中的类声明中创建变量：
+除了在函数中创建变量外, 我们还可以在 .h 中的类声明中创建变量：
 
 ```cpp
 class Ball{
@@ -132,114 +126,73 @@ public:
 }
 ```
 
-These kind of variables are called `instance variables` because every instance or object of our class will get a copy of it. The way they behave is more or less the same as the stack variables created in functions. They exist for the duration of the {} in which they were defined, in this case the {} of the object to which they belong.
+这些变量称为`实例变量` / `instance variables`, 因为我们的类的每个实例或对象都会得到一个副本。它们的行为方式或多或少与在函数中创建的栈变量相同。它们在定义它们的 {} 期间存在, 在这种情况下是它们所属的对象是 {}。
 
-这些变量称为“实例变量”, 因为我们的类的每个实例或对象都会得到一个副本。它们的行为方式或多或少与在函数中创建的堆栈变量相同。它们在定义它们的{}期间存在, 在这种情况下是它们所属的对象的{}。
+这些变量可以从类中的任何地方访问, 所以当我们需要可以从这个类的对象中的任何函数访问的数据时, 我们是这样创建的。
 
-These variables can be accessed from anywhere in the class so when we need to have data that is accessible from any function in an object of this class we create it like this.
+堆栈中的内存是有限的, 精确的大小, 取决于我们的计算机的架构, 操作系统, 甚至我们使用的编译器。在某些系统中, 它甚至可以在应用程序的运行期间更改, 但大多数时候我们不会触碰到这个限制。
 
-这些变量可以从类中的任何地方访问, 所以当我们需要可以从这个类的对象中的任何函数访问的数据时, 我们这样
-创建它。
-
-The memory in the stack is limited, the exact size, depends on the architecture of our computer, the operating system and even the compiler we are using. In some systems it can even be changed during the runtime of the application, but most of the time we won't reach that limit.
-
-堆栈中的内存是有限的, 精确的大小, 取决于我们的计算机的架构, 操作系统, 甚至我们使用的编译器。在某些系统中, 它甚至可以在应用程序的运行期间更改, 但大多数时候我们不会达到这个限制。
-
-Even if we create all of our variables in the stack, usually the objects that consume most memory like for example a vector or in openFrameworks something like ofPixels, will create most of the memory they use internally in the heap which is only limited by the amount of memory available in the computer so we don't need to worry about it.
-
-即使我们在堆栈中创建所有的变量, 通常消耗大多数内存的对象, 例如一个向量或者在openFrameworks中的东西像是像素, 将创建大部分的内存在堆内部使用, 它只受限于的内存可用在计算机中, 所以我们不需要担心它。
-
-We'll see in the next sections how the heap works and what are the advantages of using the heap or the stack.
+即使我们在堆栈中创建所有的变量, 通常消耗大多数内存的对象, 例如一个向量或者在 openFrameworks 中的东西像是像素, 将创建大部分的内存在堆内部使用, 它只受限于的计算机的内存, 所以我们不需要担心它。
 
 我们将在下面的章节中看到堆是如何工作的, 以及使用堆或堆栈的优点。
 
-## Pointers and references ##
-##指针和参考文献##
 
-Before talking about heap memory let's see how pointers and references work in c++, what's their syntax and what's really happening with memory when we create a pointer or a reference.
+## 指针和引用
 
-在谈论堆内存之前, 我们来看看指针和引用在C ++中是如何工作的, 当我们创建一个指针或引用时, 它们的语法和内存究竟发生了什么。
-
-As we've seen before we can get the address of a variable by doing:
+在谈论堆内存之前, 我们来看看指针和引用在 C++ 中是如何工作的, 当我们创建一个指针或引用时, 它们的语法和内存究竟发生了什么。
 
 正如我们以前看到的, 我们可以通过执行以下操作获取变量的地址：
-
 
 ```cpp
 cout << &i << endl;
 ```
 
-And that will give us the memory address of the first byte used by that variable no matter its type. When we store that memory address in another variable that's what we call in c++ a pointer. The syntax is:
-
-这将给我们该变量使用的第一个字节的内存地址, 无论它的类型。当我们将该内存地址存储在另一个变量中, 这是我们在c ++中调用的指针。语法是：
+这将给我们该变量使用的第一个字节的内存地址, 无论它的类型。当我们将该内存地址存储在另一个变量中, 这就是 c++ 中调用的指针。语法是：
 
 ```cpp
 int i = 0;
 int * a = &i;
 ```
 
-And what we get in memory is something like:
-
-我们在记忆中得到的是：
+我们在内存中得到的是：
 
 ![Pointer](images/pointer.svg)
 
-A pointer usually occupies 4 or 8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value. That's why it's called pointer.
-
 指针通常占用4或8个字节 (取决于我们是在32或64位的应用程序), 我们将它表示为1个字节, 只是为了更容易理解, 但是你可以看到它只是另一个变量, 而不是包含值包含指向值的内存地址。这就是为什么它被称为指针。
 
-A pointer can point to heap or stack memory.
+指针可以指向堆或栈内存。
 
-指针可以指向堆或堆栈内存。
-
-Now, let's explain something that it's really important to take into account when programming in c++. As we've seen till now, when we declare a variable like:
-
-现在, 让我们解释一下, 在使用c ++编程时, 考虑到这一点非常重要。正如我们所见到的, 当我们声明一个变量：
+现在, 让我们详细的说一下在使用 c++ 编程时非常重要的一点。正如我们所见到的, 当我们声明一个变量时：
 
 ```cpp
 int i;
 ```
-We get a memory layout like:
 
 我们得到了一个这样的内存布局:
 
-![Int i](images/int_i "")
+![Int i](images/int_i.svg)
 
-As we see there's no value in that memory area yet. In other languages like processing doing something like:
-
-正如我们所看到的那样, 内存区域没有价值。在其他语言, 如处理做类似：
+正如我们所看到的那样, 内存区域没有值。在其他语言中 (如 processing) 输入下列代码：
 
 ```java
 int i;
 println(i);
 ```
 
-is illegal, the compiler will tell us that we are trying to use a variable that is not initialized. In c++ though, that's perfectly legal but the contents of that variable are undefined. Most of the times we'll get 0 because the operating system will clear the memory before assigning it to our program, again, for security reasons. But if we are reusing memory that we had already assigned, then, that memory area will contain anything, and the results of our program will be undefined.
-
-是非法的, 编译器会告诉我们, 我们试图使用一个未初始化的变量。在c ++虽然, 这是完全合法的, 但该变量的内容是未定义的。大多数时候, 我们将得到0, 因为操作系统将清除内存, 然后再将其分配给我们的程序, 出于安全原因。但是如果我们重用了我们已经分配的内存, 那么该内存区域将包含任何内容, 并且我们的程序的结果将是未定义的。
-
-If for example we have a variable that defines the position of something we are going to draw, failing to initialize it will lead to that object being drawn anywhere.
+是不可行的, 编译器会告诉我们, 我们试图使用一个未初始化的变量。在 c++ 则不然, 这是完全合法的, 但该变量的内容是未定义的。大多数时候, 我们将得到0, 因为操作系统会清除内存, 然后再将其分配给我们的程序, 也是为了安全。但是如果我们重用了我们已经分配的内存, 那么该内存区域将包含任何内容, 并且我们的程序的结果将是未定义的。
 
 例如, 如果我们有一个变量定义了我们将要绘制的东西的位置, 未能初始化它将导致该对象被绘制在任何地方。
 
-Most objects have default constructors that will initialize their value to, for example 0, so in the case of objects it's usually not necessary to give them a value.
+大多数对象都有默认构造函数, 它们的值将被初始化为0, 因此在这种情况下的对象, 通常不需要给它们赋值。
 
-大多数对象都有默认构造函数, 它们的值将被初始化为例如0, 因此在对象的情况下, 通常不需要给它们赋值。
+当我们使用未初始化的指针时会发生什么？嗯, 因为指针包含一个内存地址, 如果我们在该内存区域获得的值指向一个不属于我们的程序的地址, 尝试检索或修改存储在该地址的值, 操作系统将终止我们的应用程序与分段故障信号。
 
-What happens when we use an uninitialized pointer? Well, since a pointer contains a memory address, if the value we get in that memory area points to an address that doesn't belong to our program and we try to retrieve or modify the value stored in that address the OS will kill our application with a segmentation fault signal.
-
-当我们使用未初始化的指针时会发生什么？嗯, 因为指针包含一个内存地址, 如果我们在该内存区域获得的值指向一个不属于我们的程序的地址, 我们尝试检索或修改存储在该地址的值, 操作系统将杀死我们的应用程序与分段故障信号。
-
-Back to pointers, we've seen that, we can create a pointer like:
-
-回到指针, 我们已经看到, 我们可以创建一个指针：
+回到指针, 我们可以创建一个指针：
 
 ```cpp
 int i = 5;
 int * p = &i;
 ```
-
-now, if we try to use the pointer directly like;
 
 现在, 如果我们尝试使用指针直接就像;
 
@@ -247,38 +200,26 @@ now, if we try to use the pointer directly like;
 cout << p <<< endl;
 ```
 
-what we'll get is a memory address not the value 5. So how do we access the value pointed by a pointer, well we can use the opposite operator to `&`: as `&` gives us the address of a variable, `*` gives us the value pointed by a memory address, so we can do:
-
-我们将得到的是一个内存地址而不是值5.所以我们如何访问指针指向的值, 我们可以使用相反的运算符`＆`：因为`＆`给出了变量的地址,  `*`给出了内存地址指向的值, 所以我们可以这样做：
+我们将得到的是一个内存地址而不是值5.所以我们如何访问指针指向的值, 我们可以使用相反的运算符 `＆`：因为`＆`给出了变量的地址, `*` 给出了内存地址指向的值, 所以我们可以这样做：
 
 ```cpp
 cout << *p << endl;
 ```
 
-and we'll get the value 5 printed now. We can also do:
-
-我们现在得到的值为5。我们还可以做：
+我们现在得到的值为5。我们还可以这样：
 
 ```cpp
 int j = *p;
 cout << j << endl;
 ```
 
-and again will get the value 5 since we made a copy of the value pointed by p in j.
+并且将再次获得值5, 因为我们对 j 中的 p 指向的值进行了复制。
 
-The `&`operator is called the *reference operator* since it gives us a reference to a variable, its memory address. The `*` operator is its opposite, the *dereference operator* and it gives us the value pointed by a pointer, it dereferences a reference, a memory address, so we can access its value instead of the address.
+`＆` 运算符称为*引用运算符* / *rederence operator*, 因为它提供了对变量及其内存地址的引用。 `*` 运算符是相反的, *解引用运算符* / *dereference operator*, 它给出了指针指向的值, 它引用了一个引用, 一个内存地址, 所以我们可以访问它的值而不是地址。
 
-Till now, we've work with primitive values, ints really, but the behaviour will be the same for any other primitive value, like float, short, char, unsigned int...  In c++ in fact, the behaviour is also the same for objects.
+到目前为止, 我们使用原始值, ints真的, 但行为将是相同的任何其他原始值, 如float, short, char, unsigned int ... 其实在 c++ 中, 对象的处理也是一样的。
 
-If you are used to Java, for example you've probably noticed that while in Java and C++ this:
-
-并且将再次获得值5, 因为我们对j中的p指向的值进行了复制。
-
-`＆`运算符称为*引用运算符*, 因为它提供了对变量及其内存地址的引用。 `*`运算符是相反的, *解引用运算符*, 它给出了指针指向的值, 它引用了一个引用, 一个内存地址, 所以我们可以访问它的值而不是地址。
-
-到目前为止, 我们使用原始值, ints真的, 但行为将是相同的任何其他原始值, 如float, short, char, unsigned int ...在c ++其实, 行为也是一样的对象。
-
-如果你习惯Java, 例如你可能已经注意到, 在Java和C ++中：
+如果你习惯 Java, 例如你可能已经注意到, 在 Java 和 C++ 中：
 
 ```cpp
 int a = 5;
@@ -287,9 +228,7 @@ a = 7;
 cout << "a: " << a << " b: " << b << endl;
 ```
 
-will behave the same (of course changing cout for the equivalent in java). That is: `a` will end up being 7 and `b` will be 5. When we use objects the behaviour in c++ is different to that of Java. For example, let's say we have a class Ball:
-
-将表现相同 (当然改变cout等同于java)。这就是：`a`将最终为7, `b`将为5.当我们使用对象时, c ++中的行为不同于Java的行为。例如, 假设我们有一个类Ball：
+将表现相同 (当然要把 cout 改为 java 语言)。就是：`a` 将最终为7, `b` 将为5.当我们使用对象时, c++ 中的行为不同于 Java 的行为。例如, 假设我们有一个类 Ball：
 
 ```cpp
 class Ball{
@@ -301,9 +240,7 @@ public:
 }
 ```
 
-or the similar class in processing;
-
-或类似的类;
+或在 processing 中类似的类;
 
 ```java
 class Ball{
@@ -313,9 +250,7 @@ class Ball{
 }
 ```
 
-if in c++ you do:
-
-如果在c ++中你做：
+如果在 c++ 中你写：
 
 ```cpp
 Ball b1;
@@ -325,9 +260,7 @@ b2 = b1;
 b2.pos.set(30,30);
 ```
 
-b1 pos will end up being 20,20 and b2 30,30 while if you do the equivalent in java both b1 and b2 will have position 30,30:
-
-b1 pos将最终为20,20和b2 30,30, 而如果你在java中做相同的操作, b1和b2将具有位置30,30：
+b1 pos 将最终为 20,20 和 b2 30,30, 而如果你在 java 中做相同的操作, b1 和 b2 将具有位置 30,30：
 
 ```cpp
 Ball b1 = new Ball();
@@ -337,31 +270,19 @@ b2 = b1;
 b2.pos.set(30,30);
 ```
 
-Notice how in the case of Java we have made new for the first ball but not for the second, that's because in Java everything that is an object is a pointer in the heap so when we do `b2 = b1`we are actually turning b2 into a reference to b1, and when we later change b2, we are also changing b1.
+注意在 Java 的情况下, 我们为第一个球而不是第二个球做了新的改变, 这是因为在 Java 中, 一个对象是堆中的指针, 所以当我们执行 `b2 = b1` 时, 实际上是 b2 成为了对 b1 的引用, 当我们后来改变 b2 时, 我们也改变 b1。
 
-In c++, instead when we do `b2 = b1` we are actually copying the values of the variables of b1 into b2 so we still have 2 different variables instead of a reference. When we modify b2, b1 stays the same.
+在 c++ 中则相反, 当我们使用 b2 = b1 时, 我们实际上将 b1 的变量的值复制到 b2 中, 所以我们仍然有2个不同的变量而不是引用。当我们修改 b2 时, b1 保持不变。
 
-In both languages the `=` means copy the value of the right side into the variable on the left side of the `=`. The difference is that in Java an object is really a pointer to an object the contents of `b1` or `b2` are not the object itself but its memory address, while in c++ b1 actually contains the object itself.
+在两种语言中, `=` 都表示将右侧的值复制到 `=` 左侧的变量中。不同的是, 在 Java 中, 一个对象实际上是一个指向对象的指针, `b1` 或 `b2` 的内容不是对象本身, 而是它的内存地址, 而在 c++ 中 `b1` 实际上包含了对象本身。
 
-This is more or less what memory would look like in Java and C++:
+下图或多或少能表示内存在 Java 和 C++ 中大致的样子：
 
-注意在Java的情况下, 我们为第一个球而不是第二个球做了新的, 这是因为在Java中, 一个对象是堆中的指针, 所以当我们执行`b2 = b1`时, 实际上是b2成为对b1的引用, 当我们后来改变b2时, 我们也改变b1。
+![Objects Java C](images/objects_java_c.svg)
 
-在c ++中, 相反, 当我们使用b2 = b1时, 我们实际上将b1的变量的值复制到b2中, 所以我们仍然有2个不同的变量而不是引用。当我们修改b2, b1保持不变。
+正如你可以看到在 c++ 对象在内存中只是他们的成员变量一个接一个。当我们使对象变量等于另一个变量时, 默认情况下, c++ 将所有对象复制到等号运算符的左侧。
 
-在两种语言中, `=`表示将右侧的值复制到`=`左侧的变量中。不同的是, 在Java中, 一个对象实际上是一个指向一个对象的指针, `b1'或`b2`的内容不是对象本身, 而是它的内存地址, 而在c ++中b1实际上包含对象本身。
-
-这或多或少是什么内存在Java和C ++中看起来像：
-
-![Objects Java C](images/objects_java_c "")
-
-As you can see in c++ objects in memory are just all their member variables one after another. When we make an object variable equal to another, by default, c++ copies all the object to the left side of the equal operator.
-
-正如你可以看到在c ++对象在内存中只是他们的成员变量一个接一个。当我们使对象变量等于另一个变量时, 默认情况下, c ++将所有对象复制到等号运算符的左侧。
-
-Now what would happen if we have a class like:
-
-现在如果我们有一个类, 会发生什么：
+如果现在我们有一个类, 会发生什么：
 
 ```cpp
 class Particle{
@@ -374,7 +295,7 @@ public:
 }
 ```
 
-And we do:
+然后：
 
 ```cpp
 Particle p1;
@@ -386,15 +307,11 @@ p1.parent = &ps;
 p2 = p1;
 ```
 
-Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that's what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.
+好像在 c++ 之前一样, p2 的内容将复制 p1 的内容, p1 的内容是一个 ofVec2f, 它支持2个浮点数 x 和 y, 然后是一个指向 ParticleSystem 的指针, 这就是被复制的, ParticleSystem 本身不会被复制, 只复制指向它的指针, 所以 p2 最终会有一个 p2 的位置的副本和一个指向同一个粒子系统的指针, 但是我们只有一个粒子系统。
 
-好像在c ++之前一样, p1的内容将复制p1的内容, p1的内容是一个ofVec2f, 它支持2个浮点x和y, 然后是一个指向ParticleSystem的指针, 这就是被复制的, ParticleSystem本身不会被复制只有指向它的指针, 所以p2最终会有一个p2的位置的副本和一个指向同一个粒子系统的指针, 但是我们只有一个粒子系统。
+![Object pointers](images/object_pointers.svg)
 
-![Object pointers](images/object_pointers "")
-
-The fact that things are copied by default and that objects can be stored in the stack as oposed to being always a pointer has certain adavantages. For example, in c++ a vector or an array of particles like the ones we've used in the last example will look like:
-
-事实是复制默认情况下, 并且对象可以存储在堆栈中作为永远是一个指针有一定的adavantages。例如, 在c ++中, 像我们在上一个示例中使用的粒子的矢量或数组看起来像：
+事实默认情况下就是复制, 并且对象可以存储在栈中永远作为一个指针并有一定的 adavantages。例如, 在 c++ 中, 像我们在上一个示例中使用的粒子的矢量或数组：
 
 ```cpp
 vector<Particle> particles;
@@ -1226,3 +1143,4 @@ void ofApp::setup(){
 Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it, whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference cound arrives to 0 it frees the allocated memory. That reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get wrong if we pass a shared_ptr accross different threads.
 
 是完全确定。 shared_ptr的工作方式是通过保持对它有多少引用的计数, 每当我们复制一个副本时, 它将该计数器增加一个, 每当一个引用被销毁时, 它减少一个引用。当参考库到达0时, 释放分配的内存。该引用计数是原子性地完成的, 这意味着我们可以在线程之间共享shared_ptr, 而不会出现计数问题。这并不意味着我们可以在多线程应用程序中安全地访问包含的数据, 只要引用计数不会错误, 如果我们通过一个shared_ptr跨不同线程。
+
