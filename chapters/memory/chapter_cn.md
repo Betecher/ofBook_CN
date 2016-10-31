@@ -583,17 +583,13 @@ void ofApp::draw(){
 
 ## 内存结构, 数组和向量
 
-Arrays are the most simple way in c++ to create collections of objects, as any other type in c++ they can also be created in the stack or in the heap. Arrays in the stack have a limitation though, they need to have a predifined size that needs to be specified in its declaration and can't change afterwards:
-
-数组是c ++中创建对象集合的最简单的方法, 和c ++中的任何其他类型一样, 它们也可以在堆栈或堆中创建。堆栈中的数组有一个限制, 但它们需要有一个预定义的大小, 需要在其声明中指定, 并且以后不能更改：
+数组是 c++ 中创建对象集合的最简单的方法, 和 c++ 中的任何其他类型一样, 它们也可以在堆栈或堆中创建。堆栈中的数组有限制, 它们需要有一个预定义的大小, 需要在其声明中指定, 并且以后不能更改：
 
 ```cpp
 int arr[10];
 ```
 
-the same as with any other type, the previous declaration already reserves memory for 10 ints, we don't need to use new, and that memory will be uninitialized. To access them, as you might know from previous chapters you can just do:
-
-与任何其他类型相同, 前面的声明已经为10个int保留了内存, 我们不需要使用new, 并且该内存将被初始化。要访问它们, 你可能从以前的章节可以知道, 你可以做：
+与任何其他类型相同, 前面的声明已经为10个 int 保留了内存, 我们不需要使用 new, 并且该内存将被初始化。要访问它们, 你可能从以前的章节可以知道, 你可以做：
 
 ```cpp
 int arr[10];
@@ -601,44 +597,32 @@ arr[0] = 5;
 int a = arr[0];
 ```
 
-if we try to do:
-
-如果我们试图做：
+如果我们试着这样：
 
 ```cpp
 int arr[10];
 int a = arr[5];
 ```
 
-the value of a will be undefined since the memory in the array is not initialized to any value when it's created. Also if we try to do:
-
-a的值将是未定义的, 因为数组中的内存在创建时不会被初始化为任何值。另外, 如果我们试图做：
+a 的值将是未定义的, 因为数组中的内存在创建时不会被初始化为任何值。另外, 如果我们试图这样做：
 
 ```cpp
 int arr[10];
 int a = arr[25];
 ```
 
-most probably our application will crash if the memory address at arr + 25 is outside the memory that the operating system has assigned to our application.
+如果 arr + 25 的内存地址在操作系统分配给我们的应用程序的内存之外, 很可能我们的应用程序将崩溃。
 
-很可能我们的应用程序将崩溃, 如果arr + 25的内存地址在操作系统分配给我们的应用程序的内存之外。
+我们刚才说 arr + 25？这意味着什么？正如我们在前面看到的一个变量只是内存中的一些地方, 我们可以得到它的内存地址, 这是分配给内存中该变量的第一个字节。与数组几乎是一样的, 例如, 因为我们知道一个 int 在内存中占用4个字节, 10 int 的数组将占用40个字节, 并且这些字节是连续的：
 
-We've just said arr + 25? what does that mean? As we've seen before a variable is just some place in memory, we can get its memory address which is the first byte that is assigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
+![Array](images/array.svg)
 
-我们刚才说arr + 25？这意味着什么？正如我们在前面看到的一个变量只是内存中的一些地方, 我们可以得到它的内存地址, 这是分配给内存中该变量的第一个字节。与数组几乎是一样的, 例如, 因为我们知道一个int在内存中占用4个字节, 10 int的数组将占用40个字节, 这些字节是连续的：
-
-![Array](images/array "")
-
-Remember that memory addresses are expressed as hexadecimal so 40 == 0x0028. Now to take the address of an array, as with other variable we might want to use the `&` operator and indeed we can do it like:
-
-记住内存地址表示为十六进制, 所以40 == 0x0028。现在取一个数组的地址, 和其他变量一样, 我们可能想使用`＆`运算符, 我们可以这样做：
+要知道内存地址的表示为十六进制, 所以40 == 0x0028。现在取一个数组的地址, 和其他变量一样, 我们要使用`＆`运算符, 我们可以这样做：
 
 ```cpp
 int arr[0];
 int * a = &arr[0];
 ```
-
-That gives us the address of the first element of the array which is indeed that of the array, but with arrays, the same variable is actually a pointer itself:
 
 这给了我们数组的第一个元素的地址确实是数组的地址, 但是对于数组, 同一个变量实际上是一个指针本身：
 
@@ -648,9 +632,7 @@ int * a = &arr[0];
 cout << "a: " << a << " arr: " << arr << endl;
 ```
 
-will print the same value for both a and arr. So an array is just a pointer to a memory address with the only difference that, that memory address is the beginning of reserved memory enough to allocate, in our case, 10 ints. All those ints will be one after another, so when we do `arr[5]` we are just accessing the value that is in the memory address of our array + the size of 5 ints. If our array started in `0x0010`, and ints ocupy `4 bytes`, arr[5] would be `10 + 4 * 5 = 30` which in hexadecimal is `0x001E`. We can actually do this in our code:
-
-将为a和arr打印相同的值。所以一个数组只是一个指向内存地址的指针, 唯一的区别是, 内存地址是足够分配保留内存的开始, 在我们的例子中是10个int。所有这些int将是一个接一个, 所以当我们做'arr [5]', 我们只是访问的值在我们的数组的内存地址+ 5 ints的大小。如果我们的数组在`0x0010`开始, ints ocupy`4字节, arr [5]将是`10 + 4 * 5 = 30`, 十六进制是`0x001E`。我们可以在我们的代码中这样做：
+将为 a 和 arr 打印相同的值。所以一个数组只是一个指向内存地址的指针, 唯一的区别是, 内存地址是足够分配保留内存的开始, 在我们的例子中是10个 int。所有这些 int 是一个接一个的, 当我们做 `arr [5]`, 我们只是访问的值在我们内存地址中 5 ints 数组的大小。如果我们的数组在 `0x0010` 开始, ints ocupy `4字节`, arr [5]将是`10 + 4 * 5 = 30`, 十六进制是 `0x001E`。我们可以在我们的代码中这样做：
 
 ```cpp
 int arr[10];
@@ -659,21 +641,15 @@ cout << "&arr[5]: " << &arr[5] << "arr+5: " << arr+5 << endl;
 cout << "arr[5]: " << arr[5] << "*(arr+5): " << *(arr+5) << endl;
 ```
 
-now, that's really weird and most of the time you won't use it, it's called pointer arithmetic. The first cout will print the address in memory of the int at position 5 in the array in the first case using the `&` operator to get the address of `arr[5]` and in the second directly by adding 5 to the first address of `arr` doing `arr+5`. In the second cout we print the value at that memory location, using `arr[5]` or dereferencing the address `arr+5` using the `*` operator.
+现在, 这真的很奇怪, 大多数时候你不会使用它, 它被称为指针算术。第一个cout在第一种情况下使用`＆`运算符打印数组中位置5的 int 的地址, 得到 arr [5] 的地址, 在第二种情况下, 通过向第一行添加5 `arr` 的地址做 `arr + 5`。在第二个cout中, 我们使用 `arr [5]` 或者使用 `*` 运算符解除引用地址`arr + 5`, 在该内存位置打印值。
 
-现在, 这真的很奇怪, 大多数时候你不会使用它, 它被称为指针算术。第一个cout在第一种情况下使用`＆`运算符打印数组中位置5的int的地址, 得到arr [5]的地址, 在第二种情况下, 通过向第一行添加5 `arr`的地址做`arr + 5`。在第二个cout中, 我们使用`arr [5]`或者使用`*`运算符解除引用地址`arr + 5', 在该内存位置打印值。
-
-Note that when we add `5` to the adress of the array it's not bytes we are adding but the size in bytes of the type it contains, in this case `+5` actually means `+20` bytes, you can check it by doing:
-
-注意, 当我们在数组的地址中添加“5”时, 它不是字节数, 而是字节大小, 在这种情况下, '+ 5'实际上意味着+ 20字节, 你可以检查它通过做：
+注意, 当我们在数组的地址中添加 `5` 时, 它不是字节数, 而是字节大小, 在这种情况下, `+ 5` 实际上意味着 `+20` 字节, 你可以检查它：
 
 ```cpp
 int arr[10];
 arr[5] = 7;
 cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
 ```
-
-and substracting the hexadecimal values in a calculator. If you try to substract them in your program like:
 
 并在计算器中减去十六进制值。如果你试图在你的程序中减去他们：
 
@@ -684,21 +660,13 @@ cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
 cout << "(arr+5) - arr: " << (arr+5) - arr << endl;
 ```
 
-You will end up with `5` again because as we've said pointer arithmetic works with the type size not bytes.
+你将再次以 `5` 结束, 因为我们已经说过指针运算的类型大小不是字节。
 
-你将再次以“5”结束, 因为我们已经说过指针运算的类型大小不是字节。
-
-The syntax of pointer arithmetics is kind of complicated, and the idea of this part wasn't really to show pointer arithmetics itself but how arrays are just a bunch of values one after another in memory, so don't worry if you haven't fully understood the syntax, it's probably something you won't need to use. It is also important to remember that an array variable acts as a pointer so when we refer to it without using the `[]` operator we end up with a memory address not with the values it contains.
-
-指针算术的语法是复杂的, 这个部分的想法并不是真正显示指针算术本身, 而是如何数组只是一堆值在内存中一个接一个, 所以不要担心, 如果你没有完全理解的语法, 这可能是你不需要使用的东西。同样重要的是记住一个数组变量作为一个指针, 所以当我们引用它而不使用`[]“运算符时, 我们最终得到的内存地址不是它包含的值。
-
-The arrays we've created till now are created in the stack so be careful when using big arrays like this cause it might be problematic.
+指针算术的语法是复杂的, 这个部分的想法并不是真正显示指针算术本身, 而是指出数组只是一堆内存中一个接一个的值, 所以不要担心, 如果你没有完全理解的语法, 这可能是你不需要使用的东西。同样重要的是记住一个数组变量作为一个指针, 所以当我们引用它而不使用 `[]` 运算符时, 我们最终得到的是内存地址而不是它包含的值。
 
 我们到目前为止创建的数组是在堆栈中创建的, 因此在使用大数组时要小心, 因为这可能会有问题。
 
-Arrays in the heap are created like anything else in the heap, by using `new`:
-
-通过使用`new`, 堆中的数组就像堆中的其他任何东西一样被创建：
+通过使用 `new`, 创建堆中的数组就像创建堆中的其他任何东西一样：
 
 ```cpp
 int arr[] = new int[10];
@@ -710,13 +678,9 @@ or
 int * arr = new int[10];
 ```
 
-As you can see this confirms what we've said before, an array variable is just a pointer, when we call `new int[10]` it allocates memory to store 10 integers and returns the memory address of the first byte of the first integer in the array, we can keep it in a pointer like in the second example or using `int arr[]` which declares an array of unkown size.
+正如你可以看到的, 这证实了我们之前所说的, 一个数组变量只是一个指针, 当我们调用 new int [10]时, 它分配内存来存储10个整数, 并返回第一个字节的内存地址整数, 我们可以将它保存在一个指针, 就像在第二个例子中, 或者使用 `int arr []`, 它声明一个未知大小的数组。
 
-正如你可以看到的, 这证实了我们之前所说的, 一个数组变量只是一个指针, 当我们调用new int [10]时, 它分配内存来存储10个整数, 并返回第一个字节的内存地址整数, 我们可以将它保存在一个指针, 就像在第二个例子中, 或者使用`int arr []`, 它声明一个未知大小的数组。
-
-The same as other variables created in the heap we'll need to delete this manually so when we are done with it we need to use `delete` to deallocate that memory, in the case of arrays in the heap the syntax is slightly special:
-
-与在堆中创建的其他变量一样, 我们需要手动删除它, 所以当我们完成它, 我们需要使用`delete`来释放内存, 在堆中的数组的情况下, 语法稍微有点特殊：
+与在堆中创建的其他变量一样, 我们需要手动删除它, 所以当我们完成它, 我们需要使用`delete` 来释放内存, 在堆中的数组的情况下, 语法稍微有点特殊：
 
 ```cpp
 int arr[] = new int[10];
@@ -724,11 +688,7 @@ int arr[] = new int[10];
 delete[] arr;
 ```
 
-if you fail to use the `[]` when deleting it, it'll only deallocate the first value and you'll end up with a memory leak.
-
-如果你在删除它时没有使用`[]', 它只会释放第一个值, 你会发现内存泄漏。
-
-There's also some problems with the syntax of arrays, for example this:
+如果你在删除它时没有使用 `[]`, 它只会释放第一个值, 然后你就会发现内存泄漏了。
 
 数组的语法也有一些问题, 例如：
 
@@ -738,9 +698,7 @@ int arrB[10];
 arrB = arr;
 ```
 
-will fail to compile. And this:
-
-将无法编译。和这个：
+这将无法编译。还有这个：
 
 ```cpp
 int arr[] = new int[10];
@@ -748,27 +706,19 @@ int arrB[] = new int[10];
 arrB = arr;
 ```
 
-will actually compile but as with other variables we are not copying the values that arr points to into arrB but instead the memory address. In this case will end up with 2 pointers pointing to the same memory location, the one that we created when creating arr and lose the memory that we allocated when initializing arrB. Again we have a memory leak, the memory allocated when doing `int arrB[] = new int[10];` is not referenced by any variable anymore so we can't delete it anymore. To copy arrays there's some **c** (not c++) functions like memcpy but their syntax is kind of complex, that's why when working with c++ is recommended to use vectors.
+这将实际编译, 但与其他变量一样, 我们不是将 arr 指向的值复制到 arrB, 而是将内存地址复制过去。在这种情况下, 最终将有2个指向同一内存位置的指针, 这是我们在创建arr时创建的指针, 并丢失了在初始化 arrB 时分配的内存。再次, 我们有一个内存泄漏, 内存分配时做 `int arrB [] = new int [10];` 不再被任何变量引用, 所以我们不能删除它了。要复制数组, 有一些 **c** (不是 c++)函数像 memcpy, 但它们的语法是复杂的, 这就是为什么使用 c++ 时推荐使用向量。
 
-将实际编译, 但与其他变量一样, 我们不是将arr指向的值复制到arrB, 而是将内存地址。在这种情况下, 最终将有2个指向同一内存位置的指针, 这是我们在创建arr时创建的指针, 并丢失了在初始化arrB时分配的内存。再次, 我们有一个内存泄漏, 内存分配时做`int arrB [] = new int [10];`不再被任何变量引用, 所以我们不能删除它了。要复制数组, 有一些** c ** (不是c ++)函数像memcpy, 但它们的语法是复杂的, 这就是为什么使用c ++时推荐使用向量。
-
-C++ vectors are very similar to arrays, indeed their layout in memory is the same as an array, they contain a bunch of values contiguous in memory and always allocated in the heap. The main difference is that we get a nicer syntax and *stack semantics*. To allocate a vector to contain 10 ints we can do:
-
-C ++向量与数组非常相似, 确实它们在内存中的布局与数组相同, 它们包含一堆在内存中连续的值, 并且始终在堆中分配。主要区别是我们得到了更好的语法和*堆栈语义*。要分配一个包含10个int的向量, 我们可以这样做：
+C++ 的向量与数组非常相似, 确实它们在内存中的布局与数组相同, 它们包含一堆在内存中连续的值, 并且始终在堆中分配。主要区别是我们得到了更好的语法和 *堆栈语义* / *stack semantics*。要分配一个包含10个 int 的向量, 我们可以这样做：
 
 ```cpp
 vector<int> vec(10);
 ```
 
-We can even give an initial value to those 10 ints in the initialization like:
-
-我们甚至可以在初始化时给这10个int赋初始值：
+我们甚至可以在初始化时给这10个 int 赋初始值：
 
 ```cpp
 vector<int> vec(10,0);
 ```
-
-And for example copying a vector into another, works as expected:
 
 例如将一个向量复制到另一个, 工作原理：
 
@@ -777,9 +727,7 @@ vector<int> vec(10,0);
 vector<int> vecB = vec;
 ```
 
-Will create a copy of the contents of vec in vecB. Also even if the memory that the vector uses is in the heap, when a vector goes out of scope, when the block in which it was declared ends, the vector is destroyed cause the vector itself is created in the stack, so going out of scope, triggers its destructor that takes care of deleting the memory that it has created in the heap:
-
-将在vecB中创建vec的内容的副本。即使向量使用的内存在堆中, 当向量超出范围时, 当它被声明的块结束时, 向量被销毁, 因为向量本身是在堆栈中创建的, 所以离开范围, 触发它的析构函数, 它负责删除它在堆中创建的内存：
+将在 vecB 中创建 vec 内容的副本。即使向量使用的内存在堆中, 当向量超出范围时, 当它被声明的块结束时, 向量被销毁, 因为向量本身是在堆栈中创建的, 所以离开范围, 触发它的析构函数, 就会删除它在堆中创建的内存：
 
 ```cpp
 void ofApp::update(){
@@ -788,44 +736,29 @@ void ofApp::update(){
 }
 ```
 
-That makes vectors easier to use than arrays since we don't need to care about deleting them, end up with dangling pointers, memory leaks... and their syntax is easier.
+这使得向量比数组更容易使用, 因为我们不需要关心删除它们, 由于悬挂指针, 内存泄漏等而崩溃...以及这样的语法更容易。
 
-这使得向量比数组更容易使用, 因为我们不需要关心删除它们, 最终以悬挂指针, 内存泄漏...和他们的语法更容易。
+向量有一些更多的功能, 如果我们想优化性能或在多线程应用程序中使用它们, 那么正确地使用它们可能会很棘手, 但这不是本章的范围, 你可以找到一些关于向量的教程, 这是一个介绍性的openFrameworks网站：[矢量基础] (http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html), 这一个解释更高级的概念 [std::vector](http://arturocastro.net/blog/2011/10/28/stl::vector/)
 
-Vectors have some more features and using them properly might be tricky mostly if we want to optimize for performance or use them in multithreaded applications, but that's not the scope of this chapter, you can find some tutorials about vectors, this is an introductory one in the openFrameworks site: [vectors basics](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html) and this one explains more advanced concepts [std::vector](http://arturocastro.net/blog/2011/10/28/stl::vector/)
+## 其他内存结构, 列表和映射
 
-向量有一些更多的功能, 如果我们想优化性能或在多线程应用程序中使用它们, 那么正确地使用它们可能会很棘手, 但这不是本章的范围, 你可以找到一些关于向量的教程, 这是一个介绍性的openFrameworks网站：[矢量基础] (http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html), 这一个解释更高级的概念[std :: vector] (http://arturocastro.net/blog / 2011/10/28 / stl :: vector /)
+在内存中一个接一个的对象是大多数时候我们想要的, 访问非常迅速, 无论我们想要顺序访问他们每个或随机到任何人, 因为一个向量只是一个内部数组, 访问位置20, 对于数组只是意味着在内部它只需要获得第一个位置的内存地址, 并添加20。
 
-## Other memory structures, lists and maps ##
-##其他内存结构, 列表和映射##
+在一些情况下, 向量不是最优的内存结构。例如, 如果我们要在向量的中间频繁地添加或删除元素, 并且将向量想象为内存条, 这意味着我们需要将向量的其余部分移动到右边的一个位置, 然后将新元素插入空闲位置。在内存中没有移动, 移动连续的内存意味着复制它, 如我们之前所说, 复制内存是一个相对较慢的操作。
 
-Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accesing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In soime cases though, vectors are not the most optimal memory structure. For example, if we want to frequnetly add  or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
+![Vector inserting](images/vector_inserting.svg)
 
-在内存中一个接一个的对象是大多数时候我们想要的, 访问是真的很快, 无论我们想要顺序访问他们每个或随机到任何人, 因为一个向量只是一个内部数组, 访问让我们说位置20在它, 只是意味着在内部它只需要获得第一个位置的内存地址, 并添加20。在这种情况下, 向量不是最优的内存结构。例如, 如果我们要在向量的中间频繁地添加或删除元素, 并且将向量想象为内存条, 这意味着我们需要将向量的其余部分移动到右边的一个位置, 然后将新元素插入空闲位置。在内存中没有移动, 移动连续的内存意味着复制它, 如我们之前所说, 复制内存是一个相对较慢的操作。
+有时, 如果没有足够的内存来移动 / 复制元素, 一个位置在右边, 向量将需要将整个东西复制到一个新的内存位置。如果我们正在处理成千上万的元素, 并且非常频繁, 例如每一帧, 这样做真的非常卡顿。
 
-![Vector inserting](images/vector_inserting "")
+为了解决这个问题, 还有其他内存结构, 例如列表。在列表中, 存储器不是连续的, 而是每个元素具有指向下一个和前一个元素的指针, 因此插入一个元素只是意味着将这些指针改变为指向新添加的元素。在列表中, 我们不需要移动元素, 但它的主要缺点就是: 不是内存中连续的元素, 它的访问可能比向量稍慢, 也不能在某些情况下使用它, 例如上传数据到总是想要连续存储器的显卡。
 
-Sometimes, if there's not enough memory to move/copy the elements, one position to the right, the vector will need to copy the whole thing to a new memory location. If we are working with thousands of elements and doing this very frequently, like for example every frame, this can really slow things down a lot.
+![List](images/list.svg)
 
-有时, 如果没有足够的内存来移动/复制元素, 一个位置在右边, 向量将需要将整个东西复制到一个新的内存位置。如果我们正在处理成千上万的元素, 并且这样做非常频繁, 例如每一帧, 这真的可以减慢很多事情。
+列表的另一个问题是, 试图访问列表中间的元素 (所谓的随机访问) 很缓慢, 因为我们总是必须遍历所有列表, 直到到达期望的元素。列表常用于, 当我们很少需要随机访问它的位置, 我们需要频繁地添加或删除中间的元素的时候。有关列表语法的详细信息, 您可以查看 [c++ 列表文档](http://www.cplusplus.com/reference/list/list/)
 
-To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguos memory.
+在 c++ 标准库或其他 c++ 库中有几个内存结构, 除了向量和列表, 我们只看简要的映射。
 
-为了解决这个问题, 还有其他内存结构, 例如列表。在列表中, 存储器不是连续的, 而是每个元素具有指向下一个和前一个元素的指针, 因此插入一个元素只是意味着将这些指针改变为指向新添加的元素。在列表中, 我们不需要移动元素, 但它的主要缺点是不是内存中连续的元素, 它的访问可能比向量稍慢, 也不能在某些情况下使用它, 例如上传数据到总是想要连续存储器的显卡。
-
-![List](images/list "")
-
-Another problem of lists is that trying to access an element in the middle of the list (what is called random access) is slow since we always have to go through all the list till we arrive to the desired element. Lists are used then, when we seldom need to access randomly to a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can check the [c++ documentation on lists](http://www.cplusplus.com/reference/list/list/)
-
-列表的另一个问题是, 试图访问列表中间的元素 (所谓的随机访问)是缓慢的, 因为我们总是必须遍历所有列表, 直到到达期望的元素。然后使用列表, 当我们很少需要随机访问它的位置, 我们需要频繁地添加或删除中间的元素。有关列表语法的详细信息, 您可以查看[c ++文档列表] (http://www.cplusplus.com/reference/list/list/)
-
-There's several memory structures in the c++ standard library or other c++ libraries, apart from vectors and lists we are only going to see briefly maps.
-
-在c ++标准库或其他c ++库中有几个内存结构, 除了向量和列表, 我们只会看到简要的映射。
-
-Sometimes, we don't want to access things by their position or have an ordered list of elements but instead have something like an index or dictionary of elements that we can access by some key, that's what a map is. In a map we can store pairs of (key,value) and look for a value by it's key. For example let's say we have a collection of objects which have a name, if that name is unique for all the objects, we can store them in a map to be able to look for them by their name:
-
-有时, 我们不想通过他们的位置访问东西或有一个有序的元素列表, 而是有一些像我们可以通过一些键访问的元素的索引或字典, 这是一个地图。在映射中, 我们可以存储 (key, value)对, 并通过它的键来查找值。例如, 假设我们有一个具有名称的对象集合, 如果该名称对于所有对象都是唯一的, 我们可以将它们存储在地图中, 以便能够通过其名称查找它们：
+有时, 我们不想通过他们的位置访问东西或有一个有序的元素列表, 而是有一些像我们可以通过一些键访问的元素的索引或字典, 这是一个地图。在映射中, 我们可以存储 (key, value), 并通过它的 key 来查找值。例如, 假设我们有一个具有名称的对象集合, 如果该名称对于所有对象都是唯一的, 我们可以将它们存储在地图中, 以便能够通过其名称查找它们：
 
 ```cpp
 map<string, NamedObject> objectsMap;
@@ -835,8 +768,6 @@ o1.name = "object1";
 objectsMap[o1.name] = o1;
 ```
 
-Later on we can look for that object using it's name like:
-
 后来我们可以使用它的名称来寻找该对象：
 
 ```cpp
@@ -845,7 +776,7 @@ objectsMap["object1"].doSomething();
 
 Be careful though, if the object didn't exist before, using the `[]` operator will create a new one. If you are not sure, it's usually wise to try to find it first and only use it if it exists:
 
-要小心, 如果对象以前不存在, 使用`[]`运算符将创建一个新的。如果你不确定, 通常是明智的尝试找到它, 只有使用它, 如果它存在：
+要小心注意, 如果对象以前不存在, 使用 `[]` 运算符将创建一个新的。如果你不确定, 通常是明智的尝试找到它, 如果它存在的话就使用它：
 
 ```cpp
 if(objectsMap.find("object1")!=objectsMap.end()){
@@ -853,12 +784,10 @@ if(objectsMap.find("object1")!=objectsMap.end()){
 }
 ```
 
-You can find the complete reference on maps in the [c++ documentation for maps](http://www.cplusplus.com/reference/map/map/)
+您可以在 [c ++ documentation for maps](http://www.cplusplus.com/reference/map/map/) 中的地图上找到完整的参考资料
 
-您可以在[c ++ documentation for maps] (http://www.cplusplus.com/reference/map/map/)中的地图上找到完整的参考资料
+## 智能指针
 
-## smart pointers ##
-##智能指针##
 As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once vañlid but now point to an invalid memory location, trying to dereference a NULL pointer, posible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
 
 正如我们前面所说的, 传统的c指针也称为现在的* raw指针*有时是有问题的, 最常见的问题是悬空指针：指针可能曾经是vañlid但现在指向一个无效的内存位置, 试图取消引用一个NULL指针, 如果我们在释放对该内存地址的引用之前无法释放内存, 则会导致可能的内存泄漏...
@@ -1061,3 +990,4 @@ void ofApp::setup(){
 Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it, whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference cound arrives to 0 it frees the allocated memory. That reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get wrong if we pass a shared_ptr accross different threads.
 
 是完全确定。 shared_ptr的工作方式是通过保持对它有多少引用的计数, 每当我们复制一个副本时, 它将该计数器增加一个, 每当一个引用被销毁时, 它减少一个引用。当参考库到达0时, 释放分配的内存。该引用计数是原子性地完成的, 这意味着我们可以在线程之间共享shared_ptr, 而不会出现计数问题。这并不意味着我们可以在多线程应用程序中安全地访问包含的数据, 只要引用计数不会错误, 如果我们通过一个shared_ptr跨不同线程。
+
