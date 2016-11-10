@@ -18,7 +18,7 @@
 
 ```cpp
 class ofApp : public ofBaseApp {
-  // ... other things ...
+  // ... 其他 ...
   ofSoundPlayer soundPlayer;
 };
 
@@ -63,21 +63,21 @@ ofSoundStream是连接你计算机上的音频硬件的途径，例如麦克风�
 
 ```cpp
 class ofApp : public ofBaseApp {
-  // ... other things ...
+  // ... 其他 ...
   void audioOut( float * output, int bufferSize, int nChannels );
   double phase;
 };
 
 void ofApp::setup() {
   phase = 0;
-  ofSoundStreamSetup(2, 0); // 2 output channels (stereo), 0 input channels
+  ofSoundStreamSetup(2, 0); // 两个输出频道（立体声），零个输入频道
 }
 
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
   for(int i = 0; i < bufferSize * nChannels; i += 2) {
-    float sample = sin(phase); // generating a sine wave sample
-    output[i] = sample; // writing to the left channel
-    output[i+1] = sample; // writing to the right channel
+    float sample = sin(phase); // 制造一个正弦波样本
+    output[i] = sample; // 写入左频道 
+    output[i+1] = sample; // 写入右频道 
     phase += 0.05;
   }
 }
@@ -102,9 +102,9 @@ openFrameworks中的声音缓冲器是*相互交织的（interleaved）*，这�
 ```cpp
 void ofApp::audioOut(ofSoundBuffer &outBuffer) {
 	for(int i = 0; i < outBuffer.size(); i += 2) {
-		float sample = sin(phase); // generating a sine wave sample
-		outBuffer[i] = sample; // writing to the left channel
-		outBuffer[i + 1] = sample; // writing to the right channel
+		float sample = sin(phase); // 制造一个正弦波样本 
+		outBuffer[i] = sample; // 写入左频道 
+		outBuffer[i + 1] = sample; // 写入右频道 
 		phase += 0.05;
 	}
 }
@@ -167,7 +167,7 @@ magnitude = sqrt( pow(complex.real, 2) + pow(complex.imaginary, 2) )
 对程序添加音频反应性的最简单方法之一是对传入的缓冲器里的音频数据进行RMS计算。RMS代表”均方根“，并且能非常直观的计算”响度“的良好近似值（比计算缓冲器的平均值或选择其最大值要好得多）。此算法的”平方“步骤将确保其输出始终为正值。这意味着你可以忽略原始音频可能有”负“样本的事实（因为不管怎样，他们听起来和那些正值是一样响的）。你可以在*audioInputExample*中看到RMS的计算。
 
 ```cpp
-// modified from audioInputExample
+// 在audioInputExample例子中修改
 float rms = 0.0;
 int numCounted = 0;
 
@@ -182,7 +182,7 @@ for (int i = 0; i < bufferSize; i++){
 
 rms /= (float)numCounted;
 rms = sqrt(rms);
-// rms is now calculated
+// 现在rms计算好了
 ```
 
 ### 音符开端检测（也称作节拍检测）
@@ -193,7 +193,7 @@ rms = sqrt(rms);
 
 ```cpp
 class ofApp : public ofBaseApp {
-    // ... other members from audioInputExample ...
+    // ... audioInputExample例子中其他的变量 ...
 
     float threshold;
     float minimumThreshold;
@@ -201,7 +201,7 @@ class ofApp : public ofBaseApp {
 };
 
 void ofApp::setup() {
-    // ... the contents of setup() from audioInputExample ...
+    // ... audioInputExample例子中setup()里的内容 ...
 
     decayRate = 0.05;
     minimumThreshold = 0.1;
@@ -209,12 +209,12 @@ void ofApp::setup() {
 }
 
 void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
-    // ... the contents of audioIn() from audioInputExample ...
+    // ... audioInputExample例子中audioIn()里的内容 ...
     
     threshold = ofLerp(threshold, minimumThreshold, decayRate);
 
     if(rms > threshold) {
-        // onset detected!
+        // 音符开端被检测到了！
         threshold = rms;
     }
 }
@@ -257,7 +257,7 @@ public:
     void updateWaveform(int waveformResolution);
     void audioOut(float * output, int bufferSize, int nChannels);
     
-    std::vector<float> waveform; // this is the lookup table
+    std::vector<float> waveform; // 这个就是查找表
     double phase;
     float frequency;
 
@@ -269,7 +269,7 @@ public:
 void ofApp::setup() {
     phase = 0;
     updateWaveform(32);
-    ofSoundStreamSetup(1, 0); // mono output
+    ofSoundStreamSetup(1, 0); // 单声道输出
 }
 
 void ofApp::update() {
@@ -291,8 +291,7 @@ void ofApp::updateWaveform(int waveformResolution) {
     waveform.resize(waveformResolution);
     waveLine.clear();
     
-    // "waveformStep" maps a full oscillation of sin() to the size 
-    // of the waveform lookup table
+    // "waveformStep" 将一个完整的sin()振幅映射到波形查找表的大小
     float waveformStep = (M_PI * 2.) / (float) waveform.size();
     
     for(int i = 0; i < waveform.size(); i++) {
@@ -339,29 +338,29 @@ waveform[i] = ofSignedNoise(i * waveformStep, ofGetElapsedTimef());
 
 ```cpp
 class ofApp : public ofBaseApp {
-    // ... the same members as the earlier app ...
+    // ... 和上一个程序的变量一样 ...
     
     float volume;
 };
 
 void ofApp::setup() {
-    // ... the rest of setup() from before ...
+    // ... 和之前程序setup()一样的部分 ...
     
     volume = 0;
 }
 
 void ofApp::update() {
-    // ... the rest of update() from before ...
+    // ... 和之前程序update()一样的部分 ...
     
     if(ofGetKeyPressed()) {
-        volume = ofLerp(volume, 1, 0.8); // jump quickly to 1
+        volume = ofLerp(volume, 1, 0.8); // 很快地跳到1
     } else {
-        volume = ofLerp(volume, 0, 0.1); // fade slowly to 0
+        volume = ofLerp(volume, 0, 0.1); // 缓慢地减至 0
     }    
 }
 
 void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
-    // ... change the "output[i] = " line from before into this:
+    // ... 将之前的"output[i] = "改成：
 
     output[i] = waveform[waveformIndex] * volume;
 }
@@ -384,21 +383,21 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
 
 ```cpp
 class ofApp : public ofBaseApp {
-    // ... the same members as the earlier app ...
+    // ... 和之前程序的变量一样 ...
     
     void keyPressed(int key);
     float frequencyTarget;
 };
 
 void ofApp::setup() {
-    // ... the rest of setup() from before ...
+    // ... 和之前程序setup()一样的部分 ...
     
     frequency = 0;
     frequencyTarget = frequency;
 }
 
 void ofApp::update() {
-    // ... replace the "frequency = " line from earlier with this:
+    // ... 把之前的"frequency = "行替换成：
     frequency = ofLerp(frequency, frequencyTarget, 0.4);
 }
 
